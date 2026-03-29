@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Classic Stockinette Beanie Pattern - Full Specification Reference</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root {
     --navy: #1a2744;
@@ -570,11 +571,602 @@
     margin-top: 1px;
   }
 
+  /* ═══ MEASUREMENT CALCULATOR ═══ */
+  .calc-section {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 12px rgba(26, 39, 68, 0.08);
+  }
+
+  .calc-section h2 {
+    margin: 0 0 0.3rem;
+    padding: 0;
+    border: none;
+    text-align: center;
+  }
+
+  .calc-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .calc-inputs {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .calc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .calc-field label {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .calc-field input[type="number"] {
+    width: 120px;
+    padding: 0.5rem 0.7rem;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-family: 'Georgia', serif;
+    color: var(--navy);
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .calc-field input[type="number"]:focus {
+    outline: none;
+    border-color: var(--light-blue);
+  }
+
+  .calc-toggle {
+    display: inline-flex;
+    border: 2px solid var(--navy);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .calc-toggle button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .calc-toggle button.active {
+    background: var(--navy);
+    color: white;
+  }
+
+  .calc-toggle button:not(.active):hover {
+    background: var(--warm-gray);
+  }
+
+  .calc-btn {
+    padding: 0.55rem 1.8rem;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.2s;
+  }
+
+  .calc-btn:hover {
+    background: var(--blue);
+  }
+
+  /* Results */
+  .calc-results {
+    display: none;
+    margin-top: 1.5rem;
+    border-top: 2px solid var(--border);
+    padding-top: 1.5rem;
+  }
+
+  .calc-results.visible {
+    display: block;
+  }
+
+  .calc-size-match {
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .calc-size-match .size-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .calc-size-match .size-detail {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .calc-card {
+    background: var(--warm-gray);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+
+  .calc-card .cc-label {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+  }
+
+  .calc-card .cc-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .calc-card .cc-sub {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.1rem;
+  }
+
+  .calc-breakdown {
+    margin-top: 1rem;
+  }
+
+  .calc-breakdown h3 {
+    font-size: 1rem;
+    margin: 1.2rem 0 0.6rem;
+  }
+
+  .calc-zone-bar {
+    display: flex;
+    height: 36px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .calc-zone-bar > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.4s ease;
+  }
+
+  .cz-brim { background: var(--accent); }
+  .cz-body { background: var(--blue); }
+  .cz-crown { background: var(--navy); }
+
+  .calc-zone-legend {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.8rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .calc-zone-legend span::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .calc-zone-legend .zl-brim::before { background: var(--accent); }
+  .calc-zone-legend .zl-body::before { background: var(--blue); }
+  .calc-zone-legend .zl-crown::before { background: var(--navy); }
+
+  /* Purchase / PDF button */
+  .calc-pdf-btn {
+    display: none;
+    margin: 1.5rem auto 0;
+    padding: 0.7rem 2.2rem;
+    background: #635bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(99,91,255,0.3);
+  }
+
+  .calc-pdf-btn:hover {
+    background: #524ae0;
+    box-shadow: 0 4px 14px rgba(99,91,255,0.4);
+    transform: translateY(-1px);
+  }
+
+  .calc-pdf-btn.visible {
+    display: block;
+  }
+
+  /* ═══ STRIPE CHECKOUT MODAL ═══ */
+  .stripe-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+  }
+
+  .stripe-overlay.open {
+    display: flex;
+  }
+
+  .stripe-modal {
+    background: white;
+    border-radius: 12px;
+    width: 420px;
+    max-width: 92vw;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+    animation: stripeSlideUp 0.3s ease;
+  }
+
+  @keyframes stripeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stripe-header {
+    background: #1a2744;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .stripe-header .sh-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .stripe-header .sh-info {
+    flex: 1;
+    color: white;
+  }
+
+  .stripe-header .sh-name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .stripe-header .sh-price {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .stripe-header .sh-desc {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 1px;
+  }
+
+  .stripe-body {
+    padding: 24px;
+  }
+
+  .stripe-field {
+    margin-bottom: 16px;
+  }
+
+  .stripe-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .stripe-field input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d4d4d8;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a1a2e;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: white;
+  }
+
+  .stripe-field input:focus {
+    outline: none;
+    border-color: #635bff;
+    box-shadow: 0 0 0 3px rgba(99,91,255,0.15);
+  }
+
+  .stripe-field input::placeholder {
+    color: #a0a0b0;
+  }
+
+  .stripe-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .stripe-row .stripe-field {
+    flex: 1;
+  }
+
+  .stripe-card-row {
+    display: flex;
+    border: 1.5px solid #d4d4d8;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .stripe-card-row:focus-within {
+    border-color: #635bff;
+    box-shadow: 0 0 0 3px rgba(99,91,255,0.15);
+  }
+
+  .stripe-card-row input {
+    border: none;
+    border-radius: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a1a2e;
+    outline: none;
+  }
+
+  .stripe-card-row input::placeholder { color: #a0a0b0; }
+  .stripe-card-row .sc-number { flex: 2; }
+  .stripe-card-row .sc-exp { flex: 1; border-left: 1px solid #d4d4d8; text-align: center; }
+  .stripe-card-row .sc-cvc { flex: 1; border-left: 1px solid #d4d4d8; text-align: center; }
+
+  .stripe-card-icons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding-right: 10px;
+    color: #a0a0b0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .stripe-pay-btn {
+    width: 100%;
+    padding: 12px;
+    background: #635bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 4px;
+  }
+
+  .stripe-pay-btn:hover { background: #524ae0; }
+  .stripe-pay-btn:disabled { background: #a0a0b0; cursor: not-allowed; }
+
+  .stripe-powered {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: #a0a0b0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .stripe-powered svg {
+    height: 14px;
+    opacity: 0.5;
+  }
+
+  .stripe-demo-banner {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    color: #92400e;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    padding: 6px 12px;
+    letter-spacing: 0.03em;
+  }
+
+  .stripe-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .stripe-close:hover {
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* Processing & success states */
+  .stripe-processing,
+  .stripe-success {
+    display: none;
+    text-align: center;
+    padding: 40px 24px;
+  }
+
+  .stripe-processing.active,
+  .stripe-success.active {
+    display: block;
+  }
+
+  .stripe-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e4e4e7;
+    border-top-color: #635bff;
+    border-radius: 50%;
+    animation: stripeSpin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes stripeSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  .stripe-processing p {
+    font-size: 14px;
+    color: #6b6b6b;
+  }
+
+  .stripe-checkmark {
+    width: 56px;
+    height: 56px;
+    background: #22c55e;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: stripePop 0.3s ease;
+  }
+
+  @keyframes stripePop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  .stripe-checkmark svg {
+    width: 28px;
+    height: 28px;
+    stroke: white;
+    stroke-width: 3;
+    fill: none;
+  }
+
+  .stripe-success h3 {
+    font-size: 18px;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .stripe-success p {
+    font-size: 13px;
+    color: #6b6b6b;
+    margin-bottom: 16px;
+  }
+
+  .stripe-receipt {
+    background: #f5f3f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #6b6b6b;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  .stripe-receipt .sr-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+  }
+
+  .stripe-receipt .sr-row.sr-total {
+    border-top: 1px solid #d4cfc7;
+    margin-top: 4px;
+    padding-top: 6px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+
   /* Print styles */
   @media print {
     body { background: white; }
     .container { max-width: 100%; }
     .arch-sheet { break-inside: avoid; }
+    .calc-section { break-inside: avoid; }
+  }
+
+  @media (max-width: 600px) {
+    .calc-inputs { flex-direction: column; align-items: stretch; }
+    .calc-field input[type="number"] { width: 100%; }
+    .calc-grid { grid-template-columns: 1fr 1fr; }
   }
 
   /* Footer */
@@ -601,6 +1193,193 @@
       <span class="badge badge-sizes">8 Sizes</span>
     </div>
   </header>
+
+  <!-- ═══ MEASUREMENT CALCULATOR ═══ -->
+  <div class="calc-section">
+    <h2>Measurement Calculator</h2>
+    <p class="calc-subtitle">Enter your head circumference to get your custom beanie measurements</p>
+
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label>Head Circumference</label>
+        <input type="number" id="calcInput" step="0.25" min="10" max="30" placeholder="22">
+      </div>
+      <div class="calc-field">
+        <label>Units</label>
+        <div class="calc-toggle" id="unitToggle">
+          <button class="active" data-unit="in">Inches</button>
+          <button data-unit="cm">cm</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label>Fit</label>
+        <div class="calc-toggle" id="fitToggle">
+          <button class="active" data-fit="fitted">Fitted</button>
+          <button data-fit="slouchy">Slouchy</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label>&nbsp;</label>
+        <button class="calc-btn" onclick="calculate()">Calculate</button>
+      </div>
+    </div>
+
+    <button class="calc-pdf-btn" id="pdfBtn" onclick="openStripe()">Purchase Pattern &mdash; $3.99</button>
+
+    <div class="calc-results" id="calcResults">
+      <div class="calc-size-match">
+        <div class="size-name" id="resSize"></div>
+        <div class="size-detail" id="resSizeDetail"></div>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-card">
+          <div class="cc-label">Finished Circumference</div>
+          <div class="cc-value" id="resCirc"></div>
+          <div class="cc-sub" id="resCircSub"></div>
+        </div>
+        <div class="calc-card">
+          <div class="cc-label">Hat Width (flat)</div>
+          <div class="cc-value" id="resWidth"></div>
+          <div class="cc-sub" id="resWidthSub"></div>
+        </div>
+        <div class="calc-card">
+          <div class="cc-label">Cast-On Stitches</div>
+          <div class="cc-value" id="resCastOn"></div>
+          <div class="cc-sub" id="resCastOnSub"></div>
+        </div>
+        <div class="calc-card">
+          <div class="cc-label">Total Height</div>
+          <div class="cc-value" id="resHeight"></div>
+          <div class="cc-sub" id="resHeightSub"></div>
+        </div>
+        <div class="calc-card">
+          <div class="cc-label">Brim (1x1 Rib)</div>
+          <div class="cc-value" id="resBrim"></div>
+          <div class="cc-sub" id="resBrimSub"></div>
+        </div>
+        <div class="calc-card">
+          <div class="cc-label">Yarn Needed (est.)</div>
+          <div class="cc-value" id="resYarn"></div>
+          <div class="cc-sub" id="resYarnSub"></div>
+        </div>
+      </div>
+
+      <div class="calc-breakdown">
+        <h3>Height Breakdown</h3>
+        <div class="calc-zone-bar" id="zoneBar">
+          <div class="cz-brim" id="zbBrim"></div>
+          <div class="cz-body" id="zbBody"></div>
+          <div class="cz-crown" id="zbCrown"></div>
+        </div>
+        <div class="calc-zone-legend">
+          <span class="zl-brim" id="zlBrim"></span>
+          <span class="zl-body" id="zlBody"></span>
+          <span class="zl-crown" id="zlCrown"></span>
+        </div>
+      </div>
+
+      <div class="calc-breakdown">
+        <h3>Crown Decrease Schedule</h3>
+        <div class="crown-viz" id="calcCrown"></div>
+      </div>
+
+      <div class="note" id="calcNote"></div>
+    </div>
+  </div>
+
+  <!-- Stripe Checkout Modal -->
+  <div class="stripe-overlay" id="stripeOverlay">
+    <div class="stripe-modal" style="position:relative;">
+      <div class="stripe-demo-banner">DEMO MODE &mdash; No real charges will be made</div>
+
+      <button class="stripe-close" onclick="closeStripe()">&times;</button>
+
+      <div class="stripe-header">
+        <div class="sh-icon">🧶</div>
+        <div class="sh-info">
+          <div class="sh-name">Knitwise Patterns</div>
+          <div class="sh-price" id="stripePrice">$3.99</div>
+          <div class="sh-desc" id="stripeDesc">Custom Beanie Pattern &mdash; PDF</div>
+        </div>
+      </div>
+
+      <!-- Form state -->
+      <div class="stripe-body" id="stripeForm">
+        <div class="stripe-field">
+          <label>Email</label>
+          <input type="email" id="stripeEmail" placeholder="you@example.com" value="demo@example.com">
+        </div>
+
+        <div class="stripe-field">
+          <label>Card information</label>
+          <div class="stripe-card-row">
+            <input class="sc-number" placeholder="1234 1234 1234 1234" value="4242 4242 4242 4242" maxlength="19">
+            <input class="sc-exp" placeholder="MM / YY" value="12 / 28" maxlength="7">
+            <input class="sc-cvc" placeholder="CVC" value="123" maxlength="4">
+            <div class="stripe-card-icons">
+              <span>VISA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stripe-field">
+          <label>Name on card</label>
+          <input type="text" placeholder="Full name" value="Jane Knitter">
+        </div>
+
+        <div class="stripe-row">
+          <div class="stripe-field">
+            <label>Country</label>
+            <input type="text" value="United States" readonly style="background:#f9f9fb;">
+          </div>
+          <div class="stripe-field">
+            <label>ZIP</label>
+            <input type="text" placeholder="12345" value="90210" maxlength="10">
+          </div>
+        </div>
+
+        <button class="stripe-pay-btn" id="stripePayBtn" onclick="processPayment()">
+          Pay $3.99
+        </button>
+
+        <div class="stripe-powered">
+          Powered by <strong style="color:#635bff;margin-left:2px;">Stripe</strong>
+          &nbsp;&bull;&nbsp; Demo Mode
+        </div>
+      </div>
+
+      <!-- Processing state -->
+      <div class="stripe-processing" id="stripeProcessing">
+        <div class="stripe-spinner"></div>
+        <p>Processing payment&hellip;</p>
+      </div>
+
+      <!-- Success state -->
+      <div class="stripe-success" id="stripeSuccess">
+        <div class="stripe-checkmark">
+          <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"></polyline></svg>
+        </div>
+        <h3>Payment successful!</h3>
+        <p>Your custom pattern is ready to download.</p>
+
+        <div class="stripe-receipt">
+          <div class="sr-row"><span>Custom Beanie Pattern (PDF)</span><span>$3.99</span></div>
+          <div class="sr-row"><span>Tax</span><span>$0.00</span></div>
+          <div class="sr-row sr-total"><span>Total</span><span>$3.99</span></div>
+        </div>
+
+        <div class="stripe-receipt" style="font-size:11px;">
+          <div class="sr-row"><span>Receipt #</span><span id="receiptNum"></span></div>
+          <div class="sr-row"><span>Date</span><span id="receiptDate"></span></div>
+          <div class="sr-row"><span>Sent to</span><span id="receiptEmail"></span></div>
+        </div>
+
+        <button class="stripe-pay-btn" onclick="downloadPDF()" style="background:#22c55e;margin-top:8px;">Download Your Pattern (PDF)</button>
+        <button class="stripe-pay-btn" onclick="closeStripe()" style="background:transparent;color:#6b6b6b;margin-top:4px;font-size:13px;box-shadow:none;">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ GAUGE ═══ -->
   <h2>Gauge</h2>
@@ -1183,6 +1962,651 @@
     <p>Pattern reference compiled from <a href="https://www.craftfix.com/circular-knit-hat-pattern/" style="color:var(--blue)">Craft Fix</a>. All measurements derived from gauge: 18 sts &times; 24 rnds = 4&Prime; in stockinette on 5mm needles.</p>
     <p>3D model specifications calculated using: Radius = Stitches &divide; (Gauge &times; 2&pi;) &nbsp;|&nbsp; Height = Rounds &divide; Row Gauge</p>
   </footer>
+
+</div>
+
+<script>
+// Toggle buttons
+document.querySelectorAll('.calc-toggle').forEach(group => {
+  group.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+});
+
+// Enter key triggers calculate
+document.getElementById('calcInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') calculate();
+});
+
+// Pattern constants
+const STS_PER_IN = 4.5;
+const RNDS_PER_IN = 6;
+const EASE_FACTOR = 0.89; // ~11% negative ease
+const WEDGES = 10;
+
+// Named sizes for matching
+const SIZES = [
+  { name: 'Newborn',   head: 14, ribRnds: 5 },
+  { name: '3\u20136 mo',    head: 16, ribRnds: 5 },
+  { name: '6\u201312 mo',   head: 18, ribRnds: 7 },
+  { name: 'Toddler',   head: 19, ribRnds: 7 },
+  { name: 'Child',     head: 20, ribRnds: 9 },
+  { name: 'Teen',      head: 21, ribRnds: 9 },
+  { name: 'Adult',     head: 22, ribRnds: 9 },
+  { name: 'Adult XL',  head: 24, ribRnds: 9 },
+];
+
+function toIn(val, unit) { return unit === 'cm' ? val / 2.54 : val; }
+function toCm(inches) { return inches * 2.54; }
+function fmt(inches) { return inches.toFixed(2).replace(/\.?0+$/, '') + '\u2033'; }
+function fmtCm(inches) { return toCm(inches).toFixed(1) + ' cm'; }
+function fmtDual(inches) { return fmt(inches) + ' / ' + fmtCm(inches); }
+
+function roundTo(n, mult) { return Math.round(n / mult) * mult; }
+
+function calculate() {
+  const rawVal = parseFloat(document.getElementById('calcInput').value);
+  if (!rawVal || rawVal < 10) return;
+
+  const unit = document.querySelector('#unitToggle .active').dataset.unit;
+  const fit = document.querySelector('#fitToggle .active').dataset.fit;
+  const headIn = toIn(rawVal, unit);
+
+  // Find closest named size
+  let closest = SIZES[0], closestDist = Infinity;
+  SIZES.forEach(s => {
+    const d = Math.abs(s.head - headIn);
+    if (d < closestDist) { closestDist = d; closest = s; }
+  });
+
+  // Core calculations
+  const finishedCirc = headIn * EASE_FACTOR;
+  const ease = headIn - finishedCirc;
+  const castOn = roundTo(finishedCirc * STS_PER_IN, 4);
+  const actualCirc = castOn / STS_PER_IN;
+  const hatWidth = actualCirc / 2;
+
+  // Rib rounds based on head size
+  let ribRnds;
+  if (headIn <= 16) ribRnds = 5;
+  else if (headIn <= 19) ribRnds = 7;
+  else ribRnds = 9;
+  const brimHeight = ribRnds / RNDS_PER_IN;
+
+  // Height: fitted uses linear formula from pattern data
+  const fittedHeight = 0.45 * headIn - 1.3;
+  const slouchAdd = fittedHeight * 0.15 + 0.25;
+  const totalHeight = fit === 'slouchy' ? fittedHeight + slouchAdd : fittedHeight;
+
+  // Crown: get castOn down to nearest multiple of WEDGES, then decrease
+  const crownBase = Math.floor(castOn / WEDGES) * WEDGES;
+  const setupNeeded = castOn > crownBase;
+  const crownRounds = (crownBase / WEDGES) - 1; // number of decrease rounds
+  const crownDepth = (crownRounds * 2 + (setupNeeded ? 2 : 0)) / RNDS_PER_IN;
+  const bodyHeight = totalHeight - brimHeight - crownDepth;
+
+  // Yarn estimate (rough: circumference × height × factor)
+  const yarnYards = Math.ceil(actualCirc * totalHeight * 1.4 + 10);
+
+  // ── Render results ──
+  document.getElementById('calcResults').classList.add('visible');
+
+  const sizeNum = SIZES.indexOf(closest) + 1;
+  document.getElementById('resSize').textContent =
+    closestDist <= 1 ? 'Size ' + sizeNum + ' \u2014 ' + closest.name : 'Custom Size';
+  document.getElementById('resSizeDetail').textContent =
+    'Your head: ' + fmtDual(headIn) + ' \u2022 Ease: \u2212' + fmt(ease) + ' (' + Math.round((ease / headIn) * 100) + '% negative)';
+
+  document.getElementById('resCirc').textContent = fmt(actualCirc);
+  document.getElementById('resCircSub').textContent = fmtCm(actualCirc);
+  document.getElementById('resWidth').textContent = fmt(hatWidth);
+  document.getElementById('resWidthSub').textContent = fmtCm(hatWidth);
+  document.getElementById('resCastOn').textContent = castOn + ' sts';
+  document.getElementById('resCastOnSub').textContent = castOn + ' \u00f7 ' + STS_PER_IN + ' = ' + fmt(actualCirc);
+  document.getElementById('resHeight').textContent = fmt(totalHeight);
+  document.getElementById('resHeightSub').textContent = fmtCm(totalHeight) + ' (' + fit + ')';
+  document.getElementById('resBrim').textContent = ribRnds + ' rnds';
+  document.getElementById('resBrimSub').textContent = fmtDual(brimHeight);
+  document.getElementById('resYarn').textContent = '~' + yarnYards + ' yds';
+  document.getElementById('resYarnSub').textContent = '~' + Math.ceil(yarnYards * 0.914) + ' m';
+
+  // Zone bar
+  const bPct = (brimHeight / totalHeight * 100).toFixed(1);
+  const bdPct = (bodyHeight / totalHeight * 100).toFixed(1);
+  const cPct = (crownDepth / totalHeight * 100).toFixed(1);
+  document.getElementById('zbBrim').style.width = bPct + '%';
+  document.getElementById('zbBrim').textContent = fmt(brimHeight);
+  document.getElementById('zbBody').style.width = bdPct + '%';
+  document.getElementById('zbBody').textContent = fmt(bodyHeight);
+  document.getElementById('zbCrown').style.width = cPct + '%';
+  document.getElementById('zbCrown').textContent = fmt(crownDepth);
+  document.getElementById('zlBrim').textContent = 'Brim: ' + ribRnds + ' rnds (' + fmt(brimHeight) + ')';
+  document.getElementById('zlBody').textContent = 'Body: ' + fmt(bodyHeight);
+  document.getElementById('zlCrown').textContent = 'Crown: ' + fmt(crownDepth);
+
+  // Crown decrease schedule
+  let crownHTML = '';
+  let sts = castOn;
+
+  if (setupNeeded) {
+    const diff = castOn - crownBase;
+    const kBetween = Math.floor(castOn / diff) - 2;
+    crownHTML += crownRow('Setup 1', '*K' + kBetween + ', K2tog* \u00d7 ' + diff, crownBase, castOn);
+    sts = crownBase;
+    crownHTML += crownRow('Setup 2', 'Knit even', sts, castOn, true);
+  }
+
+  let rndNum = 1;
+  let kCount = (sts / WEDGES) - 2;
+  while (sts > WEDGES) {
+    const newSts = sts - WEDGES;
+    const inst = kCount > 0
+      ? '*K2tog, K' + kCount + '* \u00d7 ' + WEDGES
+      : '*K2tog* \u00d7 ' + WEDGES;
+    crownHTML += crownRow('Rnd ' + rndNum, inst, newSts, castOn);
+    rndNum++;
+    sts = newSts;
+
+    if (sts > WEDGES) {
+      crownHTML += crownRow('Rnd ' + rndNum, 'Knit even', sts, castOn, true);
+      rndNum++;
+    }
+    kCount--;
+  }
+
+  document.getElementById('calcCrown').innerHTML = crownHTML;
+
+  // Note
+  document.getElementById('calcNote').innerHTML =
+    '<strong>How this works:</strong> All measurements use the pattern gauge of ' +
+    STS_PER_IN + ' sts/in and ' + RNDS_PER_IN + ' rnds/in (18 sts \u00d7 24 rnds = 4\u2033 in stockinette on 5mm needles). ' +
+    'The hat is designed with ~11% negative ease so it stretches to fit snugly. ' +
+    'Always knit a gauge swatch first \u2014 if your gauge differs, your measurements will too!';
+
+  // Show PDF button
+  document.getElementById('pdfBtn').classList.add('visible');
+}
+
+function openStripe() {
+  // Update modal description with size info
+  const fit = document.querySelector('#fitToggle .active').dataset.fit;
+  const unit = document.querySelector('#unitToggle .active').dataset.unit;
+  const rawVal = parseFloat(document.getElementById('calcInput').value);
+  const headIn = toIn(rawVal, unit);
+
+  let closest = SIZES[0], closestDist = Infinity;
+  SIZES.forEach(s => {
+    const d = Math.abs(s.head - headIn);
+    if (d < closestDist) { closestDist = d; closest = s; }
+  });
+  const sizeNum = SIZES.indexOf(closest) + 1;
+  const sizeName = closestDist <= 1 ? 'Size ' + sizeNum + ' (' + closest.name + ')' : 'Custom Size';
+
+  document.getElementById('stripeDesc').textContent =
+    sizeName + ' \u2022 ' + fit.charAt(0).toUpperCase() + fit.slice(1) + ' \u2022 PDF';
+
+  // Reset modal to form state
+  document.getElementById('stripeForm').style.display = '';
+  document.getElementById('stripeProcessing').classList.remove('active');
+  document.getElementById('stripeSuccess').classList.remove('active');
+  document.getElementById('stripePayBtn').disabled = false;
+
+  document.getElementById('stripeOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStripe() {
+  document.getElementById('stripeOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function processPayment() {
+  const payBtn = document.getElementById('stripePayBtn');
+  payBtn.disabled = true;
+
+  // Show processing
+  document.getElementById('stripeForm').style.display = 'none';
+  document.getElementById('stripeProcessing').classList.add('active');
+
+  // Simulate processing delay
+  setTimeout(() => {
+    document.getElementById('stripeProcessing').classList.remove('active');
+
+    // Fill receipt
+    document.getElementById('receiptNum').textContent =
+      'pi_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now().toString(36);
+    document.getElementById('receiptDate').textContent =
+      new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    document.getElementById('receiptEmail').textContent =
+      document.getElementById('stripeEmail').value || 'demo@example.com';
+
+    // Show success
+    document.getElementById('stripeSuccess').classList.add('active');
+  }, 2200);
+}
+
+// Close on overlay click
+document.getElementById('stripeOverlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeStripe();
+});
+
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeStripe();
+});
+
+function downloadPDF() {
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+    const W = 612, H = 792, M = 50;
+    const CW = W - 2 * M;
+    const BOTTOM = H - 50;
+
+    // PDF-safe formatters (ASCII only - no Unicode)
+    function pIn(inches) { return inches.toFixed(2).replace(/\.?0+$/, '') + '"'; }
+    function pCm(inches) { return (inches * 2.54).toFixed(1) + ' cm'; }
+    function pDual(inches) { return pIn(inches) + ' / ' + pCm(inches); }
+
+    const unit = document.querySelector('#unitToggle .active').dataset.unit;
+    const fit = document.querySelector('#fitToggle .active').dataset.fit;
+    const rawVal = parseFloat(document.getElementById('calcInput').value);
+    const headIn = toIn(rawVal, unit);
+
+    const finishedCirc = headIn * EASE_FACTOR;
+    const ease = headIn - finishedCirc;
+    const castOn = roundTo(finishedCirc * STS_PER_IN, 4);
+    const actualCirc = castOn / STS_PER_IN;
+    const hatWidth = actualCirc / 2;
+
+    let ribRnds;
+    if (headIn <= 16) ribRnds = 5;
+    else if (headIn <= 19) ribRnds = 7;
+    else ribRnds = 9;
+    const brimHeight = ribRnds / RNDS_PER_IN;
+
+    const fittedHeight = 0.45 * headIn - 1.3;
+    const slouchAdd = fittedHeight * 0.15 + 0.25;
+    const totalHeight = fit === 'slouchy' ? fittedHeight + slouchAdd : fittedHeight;
+
+    const crownBase = Math.floor(castOn / WEDGES) * WEDGES;
+    const setupNeeded = castOn > crownBase;
+    const crownRnds = (crownBase / WEDGES) - 1;
+    const crownDepth = (crownRnds * 2 + (setupNeeded ? 2 : 0)) / RNDS_PER_IN;
+    const bodyHeight = totalHeight - brimHeight - crownDepth;
+    const yarnYards = Math.ceil(actualCirc * totalHeight * 1.4 + 10);
+
+    let closest = SIZES[0], closestDist = Infinity;
+    SIZES.forEach(s => {
+      const d = Math.abs(s.head - headIn);
+      if (d < closestDist) { closestDist = d; closest = s; }
+    });
+    const sizeNum = SIZES.indexOf(closest) + 1;
+    const sizeName = closestDist <= 1 ? 'Size ' + sizeNum + ' - ' + closest.name : 'Custom Size';
+
+    // Colors
+    const navy = [26, 39, 68];
+    const blue = [46, 94, 140];
+    const muted = [107, 107, 107];
+    const accent = [196, 149, 106];
+    const cardBg = [245, 243, 240];
+    const warmBg = [253, 246, 238];
+    let pageNum = 1;
+
+    let y = M;
+
+    function drawPageFooter() {
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...muted);
+      doc.text('Classic Stockinette Beanie  |  ' + sizeName + '  |  Knitwise Patterns', W / 2, H - 24, { align: 'center' });
+      doc.text('Page ' + pageNum, W - M, H - 24, { align: 'right' });
+      doc.setDrawColor(212, 207, 199);
+      doc.setLineWidth(0.5);
+      doc.line(M, H - 36, W - M, H - 36);
+    }
+
+    function checkPage(needed) {
+      if (y + needed > BOTTOM) {
+        drawPageFooter();
+        doc.addPage();
+        pageNum++;
+        y = M;
+      }
+    }
+
+    function sectionHead(title) {
+      checkPage(30);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...navy);
+      doc.text(title, M, y + 12);
+      y += 16;
+      doc.setDrawColor(...navy);
+      doc.setLineWidth(1.5);
+      doc.line(M, y, W - M, y);
+      y += 14;
+    }
+
+    // ════════════════════════════════
+    // PAGE 1
+    // ════════════════════════════════
+
+    doc.setFontSize(28);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...navy);
+    doc.text('Classic Stockinette Beanie', W / 2, y + 6, { align: 'center' });
+    y += 28;
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'italic');
+    doc.setTextColor(...muted);
+    doc.text('Custom Pattern Sheet', W / 2, y, { align: 'center' });
+    y += 20;
+
+    // Size badge
+    var badgeText = sizeName + '  |  ' + fit.charAt(0).toUpperCase() + fit.slice(1) + ' Fit  |  Head: ' + pDual(headIn);
+    doc.setFontSize(10);
+    var badgeW = doc.getTextWidth(badgeText) + 40;
+    doc.setFillColor(229, 236, 245);
+    doc.roundedRect(W / 2 - badgeW / 2, y - 4, badgeW, 22, 11, 11, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...blue);
+    doc.text(badgeText, W / 2, y + 10, { align: 'center' });
+    y += 28;
+
+    doc.setDrawColor(...navy);
+    doc.setLineWidth(2.5);
+    doc.line(M, y, W - M, y);
+    y += 24;
+
+    // ── Measurement Cards ──
+    sectionHead('Your Measurements');
+
+    const cards = [
+      ['FINISHED CIRC', pIn(actualCirc), pCm(actualCirc)],
+      ['HAT WIDTH (FLAT)', pIn(hatWidth), pCm(hatWidth)],
+      ['CAST-ON STITCHES', castOn + ' sts', '5mm (US 8) circular'],
+      ['TOTAL HEIGHT', pIn(totalHeight), pCm(totalHeight) + ' (' + fit + ')'],
+      ['BRIM (1x1 RIB)', ribRnds + ' rounds', pDual(brimHeight)],
+      ['YARN (EST.)', '~' + yarnYards + ' yds', '~' + Math.ceil(yarnYards * 0.914) + ' m, Worsted #4'],
+    ];
+
+    const cardW = (CW - 20) / 3;
+    const cardH = 54;
+    cards.forEach((c, i) => {
+      const col = i % 3;
+      const row = Math.floor(i / 3);
+      const cx = M + col * (cardW + 10);
+      const cy = y + row * (cardH + 10);
+
+      doc.setFillColor(...cardBg);
+      doc.roundedRect(cx, cy, cardW, cardH, 5, 5, 'F');
+
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...muted);
+      doc.text(c[0], cx + cardW / 2, cy + 14, { align: 'center' });
+
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...navy);
+      doc.text(c[1], cx + cardW / 2, cy + 32, { align: 'center' });
+
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...muted);
+      doc.text(c[2], cx + cardW / 2, cy + 46, { align: 'center' });
+    });
+
+    y += 2 * (cardH + 10) + 16;
+
+    // ── Height Breakdown ──
+    sectionHead('Height Breakdown');
+
+    const barH = 28;
+    const bPct = brimHeight / totalHeight;
+    const bdPct = bodyHeight / totalHeight;
+    const cPct = crownDepth / totalHeight;
+
+    const brimW = Math.max(CW * bPct - 3, 2);
+    doc.setFillColor(...accent);
+    doc.roundedRect(M, y, brimW, barH, 4, 4, 'F');
+    if (brimW > 50) {
+      doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
+      doc.text('Brim', M + brimW / 2, y + 12, { align: 'center' });
+      doc.setFontSize(7); doc.setFont('helvetica', 'normal');
+      doc.text(pIn(brimHeight), M + brimW / 2, y + 22, { align: 'center' });
+    }
+
+    const bodyW = Math.max(CW * bdPct - 3, 2);
+    const bx = M + brimW + 3;
+    doc.setFillColor(...blue);
+    doc.roundedRect(bx, y, bodyW, barH, 4, 4, 'F');
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
+    doc.text('Body', bx + bodyW / 2, y + 12, { align: 'center' });
+    doc.setFontSize(7); doc.setFont('helvetica', 'normal');
+    doc.text(pIn(bodyHeight), bx + bodyW / 2, y + 22, { align: 'center' });
+
+    const crownW = Math.max(CW * cPct - 3, 2);
+    const crx = bx + bodyW + 3;
+    doc.setFillColor(...navy);
+    doc.roundedRect(crx, y, crownW, barH, 4, 4, 'F');
+    if (crownW > 50) {
+      doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
+      doc.text('Crown', crx + crownW / 2, y + 12, { align: 'center' });
+      doc.setFontSize(7); doc.setFont('helvetica', 'normal');
+      doc.text(pIn(crownDepth), crx + crownW / 2, y + 22, { align: 'center' });
+    }
+
+    y += barH + 10;
+
+    // Legend
+    doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(60, 60, 60);
+    doc.setFillColor(...accent); doc.rect(M, y, 8, 8, 'F');
+    doc.text('Brim: ' + ribRnds + ' rnds (' + pDual(brimHeight) + ')', M + 13, y + 7);
+    doc.setFillColor(...blue); doc.rect(M + 170, y, 8, 8, 'F');
+    doc.text('Body: ' + pDual(bodyHeight), M + 183, y + 7);
+    doc.setFillColor(...navy); doc.rect(M + 330, y, 8, 8, 'F');
+    doc.text('Crown: ' + pDual(crownDepth), M + 343, y + 7);
+    y += 20;
+
+    // ── Gauge Box ──
+    checkPage(60);
+    doc.setFillColor(...warmBg);
+    doc.setDrawColor(...accent);
+    doc.setLineWidth(2);
+    doc.roundedRect(M, y, CW, 50, 5, 5, 'FD');
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(90, 74, 58);
+    doc.text('Gauge & Fit', M + 14, y + 16);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    doc.text('18 sts x 24 rnds = 4" / 10 cm in stockinette on 5mm (US 8) needles', M + 14, y + 30);
+    doc.text('Negative ease: -' + pIn(ease) + ' (' + Math.round((ease / headIn) * 100) + '%)  |  Always knit a gauge swatch first!', M + 14, y + 42);
+    y += 60;
+
+    drawPageFooter();
+
+    // ════════════════════════════════
+    // PAGE 2
+    // ════════════════════════════════
+    doc.addPage();
+    pageNum++;
+    y = M;
+
+    sectionHead('Crown Decrease Schedule');
+
+    // Build crown data
+    var crownData = [];
+    var sts2 = castOn;
+    if (setupNeeded) {
+      var diff = castOn - crownBase;
+      var kBetween = Math.floor(castOn / diff) - 2;
+      crownData.push(['Setup 1', '*K' + kBetween + ', K2tog* x ' + diff, crownBase + ' sts', false]);
+      crownData.push(['Setup 2', 'Knit even', crownBase + ' sts', true]);
+      sts2 = crownBase;
+    }
+    var rn2 = 1, kc2 = (sts2 / WEDGES) - 2;
+    while (sts2 > WEDGES) {
+      var ns2 = sts2 - WEDGES;
+      var inst2 = kc2 > 0 ? '*K2tog, K' + kc2 + '* x ' + WEDGES : '*K2tog* x ' + WEDGES;
+      crownData.push(['Rnd ' + rn2, inst2, ns2 + ' sts', false]);
+      rn2++; sts2 = ns2;
+      if (sts2 > WEDGES) {
+        crownData.push(['Rnd ' + rn2, 'Knit even', sts2 + ' sts', true]);
+        rn2++;
+      }
+      kc2--;
+    }
+
+    // Table header
+    const rowH = 18;
+    doc.setFillColor(...navy);
+    doc.roundedRect(M, y, CW, 20, 4, 4, 'F');
+    doc.rect(M, y + 10, CW, 10, 'F');
+    doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
+    doc.text('ROUND', M + 10, y + 14);
+    doc.text('INSTRUCTION', M + 80, y + 14);
+    doc.text('REMAINING', W - M - 10, y + 14, { align: 'right' });
+    y += 20;
+
+    crownData.forEach((row, i) => {
+      checkPage(rowH);
+
+      if (i % 2 === 0) {
+        doc.setFillColor(250, 248, 245);
+        doc.rect(M, y, CW, rowH, 'F');
+      }
+
+      doc.setFontSize(10);
+      if (row[3]) {
+        doc.setTextColor(140, 140, 140);
+        doc.setFont('helvetica', 'italic');
+      } else {
+        doc.setTextColor(...navy);
+        doc.setFont('helvetica', 'bold');
+      }
+      doc.text(row[0], M + 10, y + 13);
+
+      doc.setFont('helvetica', row[3] ? 'italic' : 'normal');
+      doc.text(row[1], M + 80, y + 13);
+
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(row[3] ? 140 : navy[0], row[3] ? 140 : navy[1], row[3] ? 140 : navy[2]);
+      doc.text(row[2], W - M - 10, y + 13, { align: 'right' });
+
+      doc.setDrawColor(224, 220, 214);
+      doc.setLineWidth(0.5);
+      doc.line(M, y + rowH, W - M, y + rowH);
+      y += rowH;
+    });
+
+    doc.setDrawColor(...navy); doc.setLineWidth(1);
+    doc.line(M, y, W - M, y);
+    y += 24;
+
+    // ── Instructions ──
+    sectionHead('Pattern Instructions');
+
+    const steps = [
+      { num: '1', title: 'Cast On', body: 'Using long-tail cast on, cast on ' + castOn + ' stitches onto 5mm (US 8) circular needles. Join in the round, being careful not to twist. Place stitch marker.' },
+      { num: '2', title: 'Brim', body: 'Work K1, P1 rib for ' + ribRnds + ' rounds (' + pDual(brimHeight) + ').' },
+      { num: '3', title: 'Body', body: 'Switch to stockinette stitch (knit every round). Continue until piece measures ' + pIn(totalHeight - crownDepth) + ' / ' + pCm(totalHeight - crownDepth) + ' from cast-on edge.' },
+      { num: '4', title: 'Crown Shaping', body: 'Follow the decrease schedule above. Switch to DPNs when stitches become too tight for circular needles.' },
+      { num: '5', title: 'Finishing', body: 'Cut yarn leaving a 6" tail. Thread through remaining ' + WEDGES + ' stitches with tapestry needle. Pull tight, weave in ends.' },
+    ];
+
+    steps.forEach(s => {
+      doc.setFontSize(9);
+      var lines = doc.splitTextToSize(s.body, CW - 52);
+      // title height (16) + gap (4) + body lines + padding top/bottom
+      var boxH = 16 + 4 + lines.length * 12 + 16;
+      checkPage(boxH + 6);
+
+      doc.setFillColor(250, 248, 245);
+      doc.setDrawColor(224, 220, 214);
+      doc.setLineWidth(1);
+      doc.roundedRect(M, y, CW, boxH, 5, 5, 'FD');
+
+      // Number circle pinned to top
+      doc.setFillColor(...navy);
+      doc.circle(M + 18, y + 18, 10, 'F');
+      doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
+      doc.text(s.num, M + 18, y + 22, { align: 'center' });
+
+      // Title
+      doc.setFontSize(10); doc.setFont('helvetica', 'bold'); doc.setTextColor(...navy);
+      doc.text(s.title, M + 36, y + 20);
+
+      // Body text starts below title
+      doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.setTextColor(60, 60, 60);
+      doc.text(lines, M + 36, y + 34);
+
+      y += boxH + 6;
+    });
+
+    // ── Materials ──
+    checkPage(80);
+    y += 6;
+    sectionHead('Materials');
+
+    const matData = [
+      ['Yarn', 'Worsted / Aran (#4)', '~' + yarnYards + ' yds / ~' + Math.ceil(yarnYards * 0.914) + ' m'],
+      ['Needles', '5mm (US 8)', '16" circular + DPNs for crown'],
+      ['Notions', 'Stitch marker, tapestry needle', 'Pom pom maker (optional)'],
+    ];
+
+    doc.setFillColor(...navy);
+    doc.roundedRect(M, y, CW, 20, 4, 4, 'F');
+    doc.rect(M, y + 10, CW, 10, 'F');
+    doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
+    doc.text('ITEM', M + 10, y + 14);
+    doc.text('SPECIFICATION', M + 110, y + 14);
+    doc.text('DETAILS', M + 300, y + 14);
+    y += 20;
+
+    matData.forEach((row, i) => {
+      if (i % 2 === 0) {
+        doc.setFillColor(250, 248, 245);
+        doc.rect(M, y, CW, 20, 'F');
+      }
+      doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(...navy);
+      doc.text(row[0], M + 10, y + 14);
+      doc.setFont('helvetica', 'normal'); doc.setTextColor(60, 60, 60);
+      doc.text(row[1], M + 110, y + 14);
+      doc.setTextColor(...muted);
+      doc.text(row[2], M + 300, y + 14);
+      doc.setDrawColor(224, 220, 214); doc.setLineWidth(0.5);
+      doc.line(M, y + 20, W - M, y + 20);
+      y += 20;
+    });
+
+    doc.setDrawColor(...navy); doc.setLineWidth(1);
+    doc.line(M, y, W - M, y);
+
+    drawPageFooter();
+
+    doc.save('beanie-pattern-' + Math.round(headIn) + 'in-' + fit + '.pdf');
+
+  } catch (err) {
+    alert('PDF generation error: ' + err.message);
+    console.error('PDF Error:', err);
+  }
+}
+
+function crownRow(label, inst, sts, total, isEven) {
+  const pct = (sts / total * 100).toFixed(0);
+  const cls = isEven ? ' even-round' : '';
+  return '<div class="crown-round' + cls + '">' +
+    '<span class="rnd-label">' + label + '</span>' +
+    '<span class="rnd-inst">' + inst + '</span>' +
+    '<span class="rnd-sts">' + sts + ' sts</span>' +
+    '<span class="rnd-bar"><span class="rnd-bar-fill" style="width:' + pct + '%"></span></span>' +
+    '</div>';
+}
+</script>
 
 </div>
 </body>
