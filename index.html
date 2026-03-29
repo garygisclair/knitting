@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Stockinette Beanie Pattern - Full Specification Reference</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2e5e8c;
+    --light-blue: #4a8cc7;
+    --cream: #faf8f5;
+    --warm-gray: #f0ece6;
+    --text: #2c2c2c;
+    --muted: #6b6b6b;
+    --border: #d4cfc7;
+    --accent: #c4956a;
+    --yarn-blue: #2a3d6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 3px solid var(--navy);
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+    color: var(--navy);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  header .subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  header .source {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  header .source a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  /* Pattern badge */
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .badge-level { background: #e8f0e0; color: #3a6b1e; }
+  .badge-yarn { background: #e5ecf5; color: var(--blue); }
+  .badge-needle { background: #f5ece0; color: #8c5a2a; }
+  .badge-sizes { background: #f0e5f0; color: #6b2a6b; }
+
+  /* Sections */
+  h2 {
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    color: var(--blue);
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  /* Gauge box */
+  .gauge-box {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .gauge-box .gauge-title {
+    grid-column: 1 / -1;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gauge-item {
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+
+  .gauge-item .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .gauge-item .value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .gauge-item .unit {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.88rem;
+  }
+
+  thead th {
+    background: var(--navy);
+    color: white;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  tbody td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--warm-gray);
+  }
+
+  tbody tr:hover {
+    background: #e8e2d8;
+  }
+
+  /* Highlight adult size row */
+  tbody tr.highlight {
+    background: #dde6f0;
+    font-weight: 600;
+  }
+
+  tbody tr.highlight:hover {
+    background: #d0dce8;
+  }
+
+  .td-number {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  /* Formula boxes */
+  .formula-box {
+    background: white;
+    border-left: 4px solid var(--light-blue);
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .formula-box .formula-label {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Instruction blocks */
+  .instruction {
+    background: white;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+  }
+
+  .instruction .step-num {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: var(--navy);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  .instruction strong {
+    color: var(--navy);
+  }
+
+  /* Crown decrease visualization */
+  .crown-viz {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid var(--border);
+  }
+
+  .crown-round {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #f0ece6;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.85rem;
+  }
+
+  .crown-round:last-child { border-bottom: none; }
+
+  .crown-round .rnd-label {
+    min-width: 65px;
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 0.78rem;
+  }
+
+  .crown-round .rnd-inst {
+    flex: 1;
+    color: var(--text);
+  }
+
+  .crown-round .rnd-sts {
+    min-width: 60px;
+    text-align: right;
+    font-weight: 700;
+    color: var(--blue);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .crown-round .rnd-bar {
+    width: 120px;
+    height: 8px;
+    background: var(--warm-gray);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .crown-round .rnd-bar-fill {
+    height: 100%;
+    background: var(--light-blue);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  .crown-round.even-round {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Measurements diagram */
+  .diagram-container {
+    text-align: center;
+    margin: 2rem 0;
+  }
+
+  .diagram-container svg {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  /* Notes */
+  .note {
+    background: #fdf6ee;
+    border-left: 4px solid var(--accent);
+    padding: 0.8rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .note strong { color: #8c5a2a; }
+
+  /* Materials list */
+  .materials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .material-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+  }
+
+  .material-card .mat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin-bottom: 0.3rem;
+  }
+
+  .material-card .mat-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .material-card .mat-detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* ═══ ARCHITECTURE SHEET ═══ */
+  .arch-sheet {
+    width: 100%;
+    position: relative;
+    margin: 1.5rem 0;
+    background:
+      radial-gradient(ellipse at 10% 90%, rgba(210, 170, 120, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 95% 85%, rgba(200, 160, 110, 0.3) 0%, transparent 45%),
+      radial-gradient(ellipse at 5% 10%, rgba(190, 155, 100, 0.15) 0%, transparent 40%),
+      radial-gradient(ellipse at 90% 5%, rgba(215, 180, 130, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(245, 240, 230, 0.8) 0%, rgba(240, 235, 225, 1) 100%);
+    border: 2px solid #8b7355;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+
+  .arch-sheet::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid #b8a080;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0;
+    padding: 20px 20px 70px;
+  }
+
+  .arch-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 14px 12px;
+  }
+
+  .arch-view img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.06));
+  }
+
+  .arch-view-label {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #2c1810;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 8px;
+    padding-top: 4px;
+    border-top: 1px solid #b8a080;
+  }
+
+  /* Dimension annotations on arch views */
+  .arch-dim {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #2e5e8c;
+    white-space: nowrap;
+  }
+
+  .arch-dim-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .arch-dim-line {
+    flex: 1;
+    height: 1px;
+    background: #2e5e8c;
+    min-width: 20px;
+  }
+
+  .arch-dim-tick {
+    width: 1px;
+    height: 8px;
+    background: #2e5e8c;
+  }
+
+  /* Callout boxes on arch sheet */
+  .arch-callout {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.72rem;
+    color: #5a4a3a;
+    line-height: 1.6;
+    background: rgba(255,252,247,0.9);
+    padding: 8px 12px;
+    border: 1px solid #c4a882;
+    border-radius: 3px;
+  }
+
+  .arch-callout strong {
+    display: block;
+    color: #2c1810;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+
+  /* Grid cell borders instead of positioned separators */
+  .arch-view {
+    border-right: 1px solid #c4a882;
+    border-bottom: 1px solid #c4a882;
+  }
+
+  .arch-view:nth-child(3n) {
+    border-right: none;
+  }
+
+  .arch-grid > .arch-view:nth-last-child(-n+3) {
+    border-bottom: none;
+  }
+
+  /* Title block */
+  .arch-title-block {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255,252,247,0.92);
+    border: 1.5px solid #8b7355;
+    padding: 8px 14px;
+    z-index: 20;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    max-width: 260px;
+  }
+
+  .arch-title-block h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #2c1810;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #c4a882;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+  }
+
+  .arch-title-block .arch-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1px 10px;
+    font-size: 0.62rem;
+    color: #5a4a3a;
+  }
+
+  .arch-title-block .arch-meta .al {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #8b7355;
+  }
+
+  /* Scale bar */
+  .arch-scale {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.58rem;
+    color: #6b5a48;
+    z-index: 20;
+  }
+
+  .arch-scale-bar {
+    display: flex;
+    margin-top: 2px;
+  }
+
+  .arch-scale-bar span {
+    width: 22px;
+    height: 5px;
+    border: 1px solid #6b5a48;
+  }
+
+  .arch-scale-bar span:nth-child(odd) { background: #6b5a48; }
+  .arch-scale-bar span:nth-child(even) { background: transparent; }
+
+  .arch-scale-nums {
+    display: flex;
+    justify-content: space-between;
+    width: 110px;
+    margin-top: 1px;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: white; }
+    .container { max-width: 100%; }
+    .arch-sheet { break-inside: avoid; }
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Classic Stockinette Beanie</h1>
+    <p class="subtitle">Circular Knit Hat Pattern &mdash; 8 Sizes, Newborn to Adult XL</p>
+    <div class="badge-row">
+      <span class="badge badge-level">Beginner</span>
+      <span class="badge badge-yarn">Worsted / Aran (#4)</span>
+      <span class="badge badge-needle">5mm (US 8)</span>
+      <span class="badge badge-sizes">8 Sizes</span>
+    </div>
+    <p class="source">Pattern based on Craft Fix Circular Knit Hat &mdash; <a href="https://www.craftfix.com/circular-knit-hat-pattern/" target="_blank">craftfix.com</a></p>
+  </header>
+
+  <!-- ═══ GAUGE ═══ -->
+  <h2>Gauge</h2>
+  <div class="gauge-box">
+    <div class="gauge-title">Standard Gauge &mdash; 4&Prime; / 10 cm swatch in Stockinette</div>
+    <div class="gauge-item">
+      <div class="label">Stitches</div>
+      <div class="value">18 <span class="unit">sts / 4&Prime; (10 cm)</span></div>
+    </div>
+    <div class="gauge-item">
+      <div class="label">Rounds</div>
+      <div class="value">24 <span class="unit">rnds / 4&Prime; (10 cm)</span></div>
+    </div>
+    <div class="gauge-item">
+      <div class="label">Per Inch</div>
+      <div class="value">4.5 <span class="unit">sts/in</span></div>
+    </div>
+    <div class="gauge-item">
+      <div class="label">Per Inch</div>
+      <div class="value">6 <span class="unit">rnds/in</span></div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Key Formula</div>
+    Cast-on stitches = Finished circumference &times; 4.5 sts/in<br>
+    Hat height (rounds) = Desired height &times; 6 rnds/in
+  </div>
+
+  <!-- ═══ MATERIALS ═══ -->
+  <h2>Materials</h2>
+  <div class="materials-grid">
+    <div class="material-card">
+      <div class="mat-label">Yarn</div>
+      <div class="mat-value">Worsted / Aran Weight (#4)</div>
+      <div class="mat-detail">100&ndash;200 yards depending on size</div>
+    </div>
+    <div class="material-card">
+      <div class="mat-label">Needles</div>
+      <div class="mat-value">5mm (US 8)</div>
+      <div class="mat-detail">16&Prime; circular + DPNs for crown</div>
+    </div>
+    <div class="material-card">
+      <div class="mat-label">Notions</div>
+      <div class="mat-value">Stitch marker, tapestry needle</div>
+      <div class="mat-detail">Pom pom maker (optional)</div>
+    </div>
+    <div class="material-card">
+      <div class="mat-label">Construction</div>
+      <div class="mat-value">Knit in the round, bottom-up</div>
+      <div class="mat-detail">1x1 rib brim, stockinette body</div>
+    </div>
+  </div>
+
+  <!-- ═══ SIZE CHART ═══ -->
+  <h2>Size Chart</h2>
+  <p>All measurements in inches / centimeters. &ldquo;Hat Width&rdquo; is the laid-flat measurement (half the finished circumference).</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>Head Circ</th>
+        <th>Finished Circ</th>
+        <th>Hat Width (flat)</th>
+        <th>Height (fitted)</th>
+        <th>Height (slouch)</th>
+        <th>Cast-On</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1 &mdash; Newborn</td>
+        <td class="td-number">14&Prime; / 35.5 cm</td>
+        <td class="td-number">12.4&Prime; / 31.5 cm</td>
+        <td class="td-number">6.25&Prime; / 15.9 cm</td>
+        <td class="td-number">5&Prime; / 12.7 cm</td>
+        <td class="td-number">5.75&Prime; / 14.6 cm</td>
+        <td class="td-number">56</td>
+      </tr>
+      <tr>
+        <td>2 &mdash; 3&ndash;6 mo</td>
+        <td class="td-number">16&Prime; / 40.6 cm</td>
+        <td class="td-number">14.2&Prime; / 36.1 cm</td>
+        <td class="td-number">7&Prime; / 17.8 cm</td>
+        <td class="td-number">6&Prime; / 15.2 cm</td>
+        <td class="td-number">6.75&Prime; / 17.1 cm</td>
+        <td class="td-number">64</td>
+      </tr>
+      <tr>
+        <td>3 &mdash; 6&ndash;12 mo</td>
+        <td class="td-number">18&Prime; / 45.7 cm</td>
+        <td class="td-number">16&Prime; / 40.6 cm</td>
+        <td class="td-number">7.75&Prime; / 19.7 cm</td>
+        <td class="td-number">7&Prime; / 17.8 cm</td>
+        <td class="td-number">8&Prime; / 20.3 cm</td>
+        <td class="td-number">72</td>
+      </tr>
+      <tr>
+        <td>4 &mdash; Toddler</td>
+        <td class="td-number">19&Prime; / 48.3 cm</td>
+        <td class="td-number">16.9&Prime; / 42.9 cm</td>
+        <td class="td-number">8.25&Prime; / 21 cm</td>
+        <td class="td-number">7.5&Prime; / 19.1 cm</td>
+        <td class="td-number">8.5&Prime; / 21.6 cm</td>
+        <td class="td-number">76</td>
+      </tr>
+      <tr>
+        <td>5 &mdash; Child</td>
+        <td class="td-number">20&Prime; / 50.8 cm</td>
+        <td class="td-number">17.8&Prime; / 45.2 cm</td>
+        <td class="td-number">8.75&Prime; / 22.2 cm</td>
+        <td class="td-number">8&Prime; / 20.3 cm</td>
+        <td class="td-number">9&Prime; / 22.9 cm</td>
+        <td class="td-number">80</td>
+      </tr>
+      <tr>
+        <td>6 &mdash; Teen</td>
+        <td class="td-number">21&Prime; / 53.3 cm</td>
+        <td class="td-number">18.7&Prime; / 47.5 cm</td>
+        <td class="td-number">9.25&Prime; / 23.5 cm</td>
+        <td class="td-number">8.5&Prime; / 21.6 cm</td>
+        <td class="td-number">9.5&Prime; / 24.1 cm</td>
+        <td class="td-number">84</td>
+      </tr>
+      <tr class="highlight">
+        <td>7 &mdash; Adult</td>
+        <td class="td-number">22&Prime; / 55.9 cm</td>
+        <td class="td-number">19.6&Prime; / 49.8 cm</td>
+        <td class="td-number">10&Prime; / 25.4 cm</td>
+        <td class="td-number">9&Prime; / 22.9 cm</td>
+        <td class="td-number">10.5&Prime; / 26.7 cm</td>
+        <td class="td-number">88</td>
+      </tr>
+      <tr>
+        <td>8 &mdash; Adult XL</td>
+        <td class="td-number">24&Prime; / 61 cm</td>
+        <td class="td-number">21.3&Prime; / 54.1 cm</td>
+        <td class="td-number">11&Prime; / 27.9 cm</td>
+        <td class="td-number">9.5&Prime; / 24.1 cm</td>
+        <td class="td-number">11&Prime; / 27.9 cm</td>
+        <td class="td-number">96</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Ease:</strong> Each size has approximately 2&Prime; / 5 cm of negative ease (the hat is smaller than the head circumference) so it stretches to fit snugly. Finished circumference = Cast-on stitches &divide; 4.5 sts/in.
+  </div>
+
+  <!-- ═══ DIMENSIONS DIAGRAM ═══ -->
+  <h2>Finished Dimensions &mdash; Adult Size 7</h2>
+
+  <div class="diagram-container">
+    <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+      <!-- Hat silhouette -->
+      <path d="M 80,280 L 80,140 Q 80,50 200,30 Q 320,50 320,140 L 320,280 Z"
+            fill="#dde6f0" stroke="#1a2744" stroke-width="2"/>
+      <!-- Brim band -->
+      <rect x="75" y="256" width="250" height="28" rx="4" fill="#c4d4e8" stroke="#1a2744" stroke-width="1.5"/>
+      <text x="200" y="274" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">1x1 RIB (1.5&Prime; / 3.8 cm)</text>
+
+      <!-- Width dimension -->
+      <line x1="80" y1="300" x2="320" y2="300" stroke="#2e5e8c" stroke-width="1.5"/>
+      <line x1="80" y1="290" x2="80" y2="310" stroke="#2e5e8c" stroke-width="1.5"/>
+      <line x1="320" y1="290" x2="320" y2="310" stroke="#2e5e8c" stroke-width="1.5"/>
+      <text x="200" y="320" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700">
+        Width: 10&Prime; / 25.4 cm (flat)
+      </text>
+      <text x="200" y="338" text-anchor="middle" font-family="Arial" font-size="11" fill="#6b6b6b">
+        Circumference: 19.6&Prime; / 49.8 cm
+      </text>
+
+      <!-- Height dimension -->
+      <line x1="345" y1="30" x2="345" y2="280" stroke="#2e5e8c" stroke-width="1.5"/>
+      <line x1="335" y1="30" x2="355" y2="30" stroke="#2e5e8c" stroke-width="1.5"/>
+      <line x1="335" y1="280" x2="355" y2="280" stroke="#2e5e8c" stroke-width="1.5"/>
+      <text x="370" y="160" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700"
+            transform="rotate(90, 370, 160)">Height: 9&Prime; / 22.9 cm</text>
+
+      <!-- Crown zone -->
+      <line x1="60" y1="140" x2="340" y2="140" stroke="#c4956a" stroke-width="1" stroke-dasharray="5,5"/>
+      <text x="55" y="138" text-anchor="end" font-family="Arial" font-size="10" fill="#c4956a">Crown starts</text>
+      <text x="55" y="150" text-anchor="end" font-family="Arial" font-size="9" fill="#c4956a">(~2.5&Prime; from top)</text>
+
+      <!-- Body label -->
+      <text x="200" y="210" text-anchor="middle" font-family="Arial" font-size="13" fill="#1a2744" font-weight="600">STOCKINETTE</text>
+      <text x="200" y="226" text-anchor="middle" font-family="Arial" font-size="11" fill="#6b6b6b">88 stitches &times; 6 rnds/in</text>
+
+      <!-- Crown label -->
+      <text x="200" y="90" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">CROWN</text>
+      <text x="200" y="105" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b">88 &rarr; 10 sts (7 dec rnds)</text>
+
+      <!-- Stitch markers -->
+      <circle cx="200" cy="30" r="4" fill="#c4956a"/>
+      <text x="200" y="20" text-anchor="middle" font-family="Arial" font-size="9" fill="#c4956a">gather closed</text>
+    </svg>
+  </div>
+
+  <!-- ═══ 3D TECHNICAL DRAWING SHEET ═══ -->
+  <h2>3D Technical Drawing &mdash; Adult Size 7</h2>
+
+  <div class="arch-sheet">
+
+    <div class="arch-grid">
+      <!-- Row 1: Front, Side, 3/4 -->
+      <div class="arch-view">
+        <img src="view-front.png" alt="Front Elevation">
+        <span class="arch-view-label">Front Elevation</span>
+        <div class="arch-dim-row" style="width: 80%; margin-top: 6px;">
+          <span class="arch-dim-tick"></span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim">6.22&Prime; / 15.8 cm</span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim-tick"></span>
+        </div>
+      </div>
+
+      <div class="arch-view">
+        <img src="view-side.png" alt="Side Elevation">
+        <span class="arch-view-label">Side Elevation</span>
+        <div class="arch-dim-row" style="width: 80%; margin-top: 6px;">
+          <span class="arch-dim-tick"></span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim">9.0&Prime; / 22.9 cm height</span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim-tick"></span>
+        </div>
+      </div>
+
+      <div class="arch-view">
+        <img src="view-34.png" alt="3/4 Perspective">
+        <span class="arch-view-label">3/4 Perspective</span>
+        <div class="arch-dim-row" style="width: 80%; margin-top: 6px;">
+          <span class="arch-dim-tick"></span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim">88 cast-on stitches</span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim-tick"></span>
+        </div>
+      </div>
+
+      <!-- Row 2: Top, Back, Spec callouts -->
+      <div class="arch-view">
+        <img src="view-top.png" alt="Plan View" style="width: 180px; height: 180px;">
+        <span class="arch-view-label">Plan View (Top)</span>
+        <div class="arch-dim-row" style="width: 80%; margin-top: 6px;">
+          <span class="arch-dim-tick"></span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim">19.56&Prime; / 49.7 cm circ</span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim-tick"></span>
+        </div>
+      </div>
+
+      <div class="arch-view">
+        <img src="view-back.png" alt="Back Elevation">
+        <span class="arch-view-label">Back Elevation</span>
+        <div class="arch-dim-row" style="width: 80%; margin-top: 6px;">
+          <span class="arch-dim-tick"></span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim">R = 3.11&Prime; / 7.9 cm</span>
+          <span class="arch-dim-line"></span>
+          <span class="arch-dim-tick"></span>
+        </div>
+      </div>
+
+      <div class="arch-view" style="justify-content: flex-start; padding-top: 16px; gap: 10px;">
+        <div class="arch-callout" style="width: 100%;">
+          <strong>Gauge</strong>
+          18 sts &times; 24 rnds = 4&Prime; / 10 cm<br>
+          4.5 sts/in &bull; 6 rnds/in<br>
+          Yarn: Worsted (#4) &bull; 5mm (US 8)
+        </div>
+        <div class="arch-callout" style="width: 100%;">
+          <strong>Construction Zones</strong>
+          Brim: 1x1 Rib &bull; 1.5&Prime; / 3.8 cm &bull; 9 rnds<br>
+          Body: Stockinette &bull; 5.17&Prime; / 13.1 cm<br>
+          Crown: Dome decrease &bull; 2.67&Prime; / 6.8 cm
+        </div>
+        <div class="arch-callout" style="width: 100%;">
+          <strong>Fit</strong>
+          Head: 22&Prime; / 55.9 cm<br>
+          Finished: 19.56&Prime; / 49.7 cm<br>
+          Ease: &minus;2.44&Prime; / &minus;6.2 cm (negative)
+        </div>
+      </div>
+    </div>
+
+    <!-- Title block -->
+    <div class="arch-title-block">
+      <h3>Classic Stockinette Beanie</h3>
+      <div class="arch-meta">
+        <span class="al">Pattern</span><span>Craft Fix Circular Knit Hat</span>
+        <span class="al">Size</span><span>7 &mdash; Adult (22&Prime; / 55.9 cm head)</span>
+        <span class="al">Cast-on</span><span>88 stitches on 5mm circular</span>
+        <span class="al">Construction</span><span>Bottom-up, knit in the round</span>
+        <span class="al">Sheet</span><span>1 of 1 &bull; March 2026</span>
+      </div>
+    </div>
+
+    <!-- Scale bar -->
+    <div class="arch-scale">
+      SCALE REFERENCE
+      <div class="arch-scale-bar">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="arch-scale-nums">
+        <span>0</span><span>2.5&Prime;</span><span>5&Prime;</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ INSTRUCTIONS ═══ -->
+  <h2>Instructions &mdash; Adult Size 7 (88 stitches)</h2>
+
+  <div class="instruction">
+    <span class="step-num">1</span>
+    <strong>Cast On:</strong> Using long-tail cast on, cast on <strong>88 stitches</strong>. Join in the round, being careful not to twist. Place marker at beginning of round.
+  </div>
+
+  <div class="instruction">
+    <span class="step-num">2</span>
+    <strong>Ribbing:</strong> Work K1, P1 rib for <strong>9 rounds</strong> (~1.5&Prime; / 3.8 cm).
+  </div>
+
+  <div class="instruction">
+    <span class="step-num">3</span>
+    <strong>Body:</strong> Switch to stockinette stitch (knit every round). Continue until piece measures <strong>6.5&Prime; / 16.5 cm</strong> from cast-on edge (fitted) or <strong>8&Prime; / 20.3 cm</strong> (slouchy).
+  </div>
+
+  <div class="instruction">
+    <span class="step-num">4</span>
+    <strong>Crown Decreases:</strong> See detailed crown schedule below.
+  </div>
+
+  <div class="instruction">
+    <span class="step-num">5</span>
+    <strong>Finishing:</strong> Cut yarn leaving 6&Prime; tail. Thread through remaining 10 stitches with tapestry needle, pull tight, and weave in ends.
+  </div>
+
+  <!-- ═══ CROWN DECREASE SCHEDULE ═══ -->
+  <h2>Crown Decrease Schedule &mdash; Size 7 Adult (88 sts, 10 wedges)</h2>
+
+  <p>After body is complete, the crown shaping uses 10 decrease wedges spaced evenly around the hat. Each decrease round removes 10 stitches. A plain knit round follows each decrease round.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Decrease Math</div>
+    Start: 88 stitches &divide; 10 wedges = pre-decrease adjustment needed<br>
+    Adjust down to 80 stitches (divisible by 10 &times; 8)<br>
+    Then: *K2tog, K[N]* &times; 10, removing 10 sts per decrease round
+  </div>
+
+  <div class="crown-viz">
+    <div class="crown-round">
+      <span class="rnd-label">Setup 1</span>
+      <span class="rnd-inst">*K9, K2tog* &times; 8 &mdash; preliminary decrease</span>
+      <span class="rnd-sts">80 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:91%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Setup 2</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">80 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:91%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 1</span>
+      <span class="rnd-inst">*K2tog, K6* &times; 10</span>
+      <span class="rnd-sts">70 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:80%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Rnd 2</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">70 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:80%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 3</span>
+      <span class="rnd-inst">*K2tog, K5* &times; 10</span>
+      <span class="rnd-sts">60 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:68%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Rnd 4</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">60 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:68%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 5</span>
+      <span class="rnd-inst">*K2tog, K4* &times; 10</span>
+      <span class="rnd-sts">50 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:57%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Rnd 6</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">50 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:57%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 7</span>
+      <span class="rnd-inst">*K2tog, K3* &times; 10</span>
+      <span class="rnd-sts">40 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:45%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Rnd 8</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">40 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:45%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 9</span>
+      <span class="rnd-inst">*K2tog, K2* &times; 10</span>
+      <span class="rnd-sts">30 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:34%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Rnd 10</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">30 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:34%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 11</span>
+      <span class="rnd-inst">*K2tog, K1* &times; 10</span>
+      <span class="rnd-sts">20 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:23%"></span></span>
+    </div>
+    <div class="crown-round even-round">
+      <span class="rnd-label">Rnd 12</span>
+      <span class="rnd-inst">Knit even</span>
+      <span class="rnd-sts">20 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:23%"></span></span>
+    </div>
+    <div class="crown-round">
+      <span class="rnd-label">Rnd 13</span>
+      <span class="rnd-inst">*K2tog* &times; 10</span>
+      <span class="rnd-sts">10 sts</span>
+      <span class="rnd-bar"><span class="rnd-bar-fill" style="width:11%"></span></span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Crown geometry:</strong> The crown spans approximately 14 rounds (including plain rounds) at 6 rnds/in = <strong>2.33&Prime; / 5.9 cm</strong> of crown depth. The circumference at each decrease level: 19.6&Prime; &rarr; 17.8&Prime; &rarr; 15.6&Prime; &rarr; 13.3&Prime; &rarr; 11.1&Prime; &rarr; 8.9&Prime; &rarr; 6.7&Prime; &rarr; 4.4&Prime; &rarr; 2.2&Prime; (gather closed).
+  </div>
+
+  <!-- ═══ MATHEMATICAL MODEL ═══ -->
+  <h2>3D Model Specifications &mdash; Adult Size 7</h2>
+
+  <p>These are the exact dimensions used to build the Blender 3D model, derived from the pattern gauge and stitch counts.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Calculation</th>
+        <th>Imperial</th>
+        <th>Metric</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Finished circumference</td>
+        <td>88 sts &divide; 4.5 sts/in</td>
+        <td class="td-number">19.56&Prime;</td>
+        <td class="td-number">49.7 cm</td>
+      </tr>
+      <tr>
+        <td>Finished radius</td>
+        <td>Circ &divide; (2&pi;)</td>
+        <td class="td-number">3.11&Prime;</td>
+        <td class="td-number">7.9 cm</td>
+      </tr>
+      <tr>
+        <td>Total height (fitted)</td>
+        <td>Pattern specification</td>
+        <td class="td-number">9.0&Prime;</td>
+        <td class="td-number">22.9 cm</td>
+      </tr>
+      <tr>
+        <td>Brim (1x1 rib)</td>
+        <td>9 rnds &divide; 6 rnds/in</td>
+        <td class="td-number">1.5&Prime;</td>
+        <td class="td-number">3.8 cm</td>
+      </tr>
+      <tr>
+        <td>Body height</td>
+        <td>Total &minus; crown &minus; brim</td>
+        <td class="td-number">5.17&Prime;</td>
+        <td class="td-number">13.1 cm</td>
+      </tr>
+      <tr>
+        <td>Crown depth</td>
+        <td>14 rnds &divide; 6 rnds/in</td>
+        <td class="td-number">2.33&Prime;</td>
+        <td class="td-number">5.9 cm</td>
+      </tr>
+      <tr>
+        <td>Crown start radius</td>
+        <td>Same as body</td>
+        <td class="td-number">3.11&Prime;</td>
+        <td class="td-number">7.9 cm</td>
+      </tr>
+      <tr>
+        <td>Crown end radius</td>
+        <td>10 sts &divide; 4.5 &divide; (2&pi;)</td>
+        <td class="td-number">0.35&Prime;</td>
+        <td class="td-number">0.9 cm</td>
+      </tr>
+      <tr class="highlight">
+        <td>Decrease profile</td>
+        <td colspan="3">Radius decreases linearly: 3.11&Prime; &rarr; 2.80&Prime; &rarr; 2.49&Prime; &rarr; 2.12&Prime; &rarr; 1.77&Prime; &rarr; 1.42&Prime; &rarr; 1.06&Prime; &rarr; 0.71&Prime; &rarr; 0.35&Prime;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="formula-box">
+    <div class="formula-label">Crown Profile at Each Decrease Round</div>
+    Radius at round N = (Stitches remaining) &divide; (4.5 sts/in &times; 2&pi;)<br>
+    <br>
+    88 sts &rarr; R = 3.11&Prime; &nbsp;&nbsp; 80 sts &rarr; R = 2.83&Prime; &nbsp;&nbsp; 70 sts &rarr; R = 2.47&Prime;<br>
+    60 sts &rarr; R = 2.12&Prime; &nbsp;&nbsp; 50 sts &rarr; R = 1.77&Prime; &nbsp;&nbsp; 40 sts &rarr; R = 1.41&Prime;<br>
+    30 sts &rarr; R = 1.06&Prime; &nbsp;&nbsp; 20 sts &rarr; R = 0.71&Prime; &nbsp;&nbsp; 10 sts &rarr; R = 0.35&Prime;
+  </div>
+
+  <!-- ═══ ALL SIZES RIBBING ═══ -->
+  <h2>Ribbing Rounds by Size</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Sizes</th>
+        <th>Rib Rounds</th>
+        <th>Rib Height</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1&ndash;2 (Newborn, 3&ndash;6 mo)</td>
+        <td class="td-number">5 rounds</td>
+        <td class="td-number">0.83&Prime; / 2.1 cm</td>
+      </tr>
+      <tr>
+        <td>3&ndash;4 (6&ndash;12 mo, Toddler)</td>
+        <td class="td-number">7 rounds</td>
+        <td class="td-number">1.17&Prime; / 3.0 cm</td>
+      </tr>
+      <tr>
+        <td>5&ndash;8 (Child through Adult XL)</td>
+        <td class="td-number">9 rounds</td>
+        <td class="td-number">1.5&Prime; / 3.8 cm</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══ ABBREVIATIONS ═══ -->
+  <h2>Abbreviations</h2>
+  <table>
+    <thead>
+      <tr><th>Abbr</th><th>Meaning</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>K</td><td>Knit</td></tr>
+      <tr><td>P</td><td>Purl</td></tr>
+      <tr><td>K2tog</td><td>Knit 2 stitches together (1 stitch decreased)</td></tr>
+      <tr><td>sts</td><td>Stitches</td></tr>
+      <tr><td>rnds</td><td>Rounds</td></tr>
+      <tr><td>DPNs</td><td>Double-pointed needles</td></tr>
+      <tr><td>*...*</td><td>Repeat instructions between asterisks</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <p>Pattern reference compiled from <a href="https://www.craftfix.com/circular-knit-hat-pattern/" style="color:var(--blue)">Craft Fix</a>. All measurements derived from gauge: 18 sts &times; 24 rnds = 4&Prime; in stockinette on 5mm needles.</p>
+    <p>3D model specifications calculated using: Radius = Stitches &divide; (Gauge &times; 2&pi;) &nbsp;|&nbsp; Height = Rounds &divide; Row Gauge</p>
+  </footer>
+
+</div>
+</body>
+</html>
