@@ -319,12 +319,16 @@
   /* Measurements diagram */
   .diagram-container {
     text-align: center;
-    margin: 2rem 0;
+    margin: 0;
   }
 
   .diagram-container svg {
     max-width: 400px;
     width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .diagram-container svg { max-width: 320px; }
   }
 
   /* Notes */
@@ -1530,53 +1534,207 @@
     <strong>Ease:</strong> Each size has approximately 2&Prime; / 5 cm of negative ease (the hat is smaller than the head circumference) so it stretches to fit snugly. Finished circumference = Cast-on stitches &divide; 4.5 sts/in.
   </div>
 
-  <!-- ═══ DIMENSIONS DIAGRAM ═══ -->
-  <h2>Finished Dimensions &mdash; Adult Size 7</h2>
+  <!-- ═══ DIMENSIONS DIAGRAMS ═══ -->
+  <div style="display: flex; align-items: baseline; justify-content: space-between; margin: 2.5rem 0 0; padding-bottom: 0.4rem; border-bottom: 2px solid #d4cfc7;">
+    <h2 style="margin: 0; padding: 0; border: none;" id="dimHeading">Finished Dimensions &mdash; Adult Size 7</h2>
+    <select id="dimSizeSelect" style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 0.85rem; padding: 0.35rem 0.6rem; border: 1.5px solid #1a2744; border-radius: 6px; background: white; color: #1a2744; font-weight: 600; cursor: pointer;">
+      <option value="0">1 &mdash; Newborn</option>
+      <option value="1">2 &mdash; 3&ndash;6 mo</option>
+      <option value="2">3 &mdash; 6&ndash;12 mo</option>
+      <option value="3">4 &mdash; Toddler</option>
+      <option value="4">5 &mdash; Child</option>
+      <option value="5">6 &mdash; Teen</option>
+      <option value="6" selected>7 &mdash; Adult</option>
+      <option value="7">8 &mdash; Adult XL</option>
+    </select>
+  </div>
 
-  <div class="diagram-container">
-    <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
-      <!-- Hat silhouette -->
-      <path d="M 80,280 L 80,140 Q 80,50 200,30 Q 320,50 320,140 L 320,280 Z"
-            fill="#dde6f0" stroke="#1a2744" stroke-width="2"/>
-      <!-- Brim band -->
-      <rect x="75" y="256" width="250" height="28" rx="4" fill="#c4d4e8" stroke="#1a2744" stroke-width="1.5"/>
-      <text x="200" y="274" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">1x1 RIB (1.5&Prime; / 3.8 cm)</text>
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0 2rem; align-items: start;">
 
-      <!-- Width dimension -->
-      <line x1="80" y1="300" x2="320" y2="300" stroke="#2e5e8c" stroke-width="1.5"/>
-      <line x1="80" y1="290" x2="80" y2="310" stroke="#2e5e8c" stroke-width="1.5"/>
-      <line x1="320" y1="290" x2="320" y2="310" stroke="#2e5e8c" stroke-width="1.5"/>
-      <text x="200" y="320" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700">
-        Width: 10&Prime; / 25.4 cm (flat)
-      </text>
-      <text x="200" y="338" text-anchor="middle" font-family="Arial" font-size="11" fill="#6b6b6b">
-        Circumference: 19.6&Prime; / 49.8 cm
-      </text>
+    <!-- SIDE VIEW -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg">
+        <!-- Hat silhouette -->
+        <path d="M 80,280 L 80,140 Q 80,50 200,30 Q 320,50 320,140 L 320,280 Z"
+              fill="#dde6f0" stroke="#1a2744" stroke-width="2"/>
+        <!-- Brim band -->
+        <rect x="75" y="256" width="250" height="28" rx="4" fill="#c4d4e8" stroke="#1a2744" stroke-width="1.5"/>
+        <text x="200" y="274" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600" id="svgSideRib">1x1 RIB (1.5″ / 3.8 cm)</text>
 
-      <!-- Height dimension -->
-      <line x1="345" y1="30" x2="345" y2="280" stroke="#2e5e8c" stroke-width="1.5"/>
-      <line x1="335" y1="30" x2="355" y2="30" stroke="#2e5e8c" stroke-width="1.5"/>
-      <line x1="335" y1="280" x2="355" y2="280" stroke="#2e5e8c" stroke-width="1.5"/>
-      <text x="370" y="160" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700"
-            transform="rotate(90, 370, 160)">Height: 9&Prime; / 22.9 cm</text>
+        <!-- Width dimension -->
+        <line x1="80" y1="300" x2="320" y2="300" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="80" y1="290" x2="80" y2="310" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="320" y1="290" x2="320" y2="310" stroke="#2e5e8c" stroke-width="1.5"/>
+        <text x="200" y="320" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700" id="svgSideWidth">
+          Width: 10″ / 25.4 cm (flat)
+        </text>
+        <text x="200" y="338" text-anchor="middle" font-family="Arial" font-size="11" fill="#6b6b6b" id="svgSideCirc">
+          Circumference: 19.6″ / 49.8 cm
+        </text>
 
-      <!-- Crown zone -->
-      <line x1="60" y1="140" x2="340" y2="140" stroke="#c4956a" stroke-width="1" stroke-dasharray="5,5"/>
-      <text x="55" y="138" text-anchor="end" font-family="Arial" font-size="10" fill="#c4956a">Crown starts</text>
-      <text x="55" y="150" text-anchor="end" font-family="Arial" font-size="9" fill="#c4956a">(~2.5&Prime; from top)</text>
+        <!-- Height dimension -->
+        <line x1="345" y1="30" x2="345" y2="280" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="335" y1="30" x2="355" y2="30" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="335" y1="280" x2="355" y2="280" stroke="#2e5e8c" stroke-width="1.5"/>
+        <text x="370" y="160" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700"
+              transform="rotate(90, 370, 160)" id="svgSideHeight">Height: 9″ / 22.9 cm</text>
 
-      <!-- Body label -->
-      <text x="200" y="210" text-anchor="middle" font-family="Arial" font-size="13" fill="#1a2744" font-weight="600">STOCKINETTE</text>
-      <text x="200" y="226" text-anchor="middle" font-family="Arial" font-size="11" fill="#6b6b6b">88 stitches &times; 6 rnds/in</text>
+        <!-- Crown zone -->
+        <line x1="60" y1="140" x2="340" y2="140" stroke="#c4956a" stroke-width="1" stroke-dasharray="5,5"/>
+        <text x="55" y="138" text-anchor="end" font-family="Arial" font-size="10" fill="#c4956a">Crown starts</text>
+        <text x="55" y="150" text-anchor="end" font-family="Arial" font-size="9" fill="#c4956a" id="svgSideCrownDepth">(~2.5″ from top)</text>
 
-      <!-- Crown label -->
-      <text x="200" y="90" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">CROWN</text>
-      <text x="200" y="105" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b">88 &rarr; 10 sts (7 dec rnds)</text>
+        <!-- Body label -->
+        <text x="200" y="210" text-anchor="middle" font-family="Arial" font-size="13" fill="#1a2744" font-weight="600">STOCKINETTE</text>
+        <text x="200" y="226" text-anchor="middle" font-family="Arial" font-size="11" fill="#6b6b6b" id="svgSideBodySts">88 stitches × 6 rnds/in</text>
 
-      <!-- Stitch markers -->
-      <circle cx="200" cy="30" r="4" fill="#c4956a"/>
-      <text x="200" y="20" text-anchor="middle" font-family="Arial" font-size="9" fill="#c4956a">gather closed</text>
-    </svg>
+        <!-- Crown label -->
+        <text x="200" y="90" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">CROWN</text>
+        <text x="200" y="105" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b" id="svgSideCrownSts">88 → 10 sts (7 dec rnds)</text>
+
+        <!-- Stitch markers -->
+        <circle cx="200" cy="30" r="4" fill="#c4956a"/>
+        <text x="200" y="20" text-anchor="middle" font-family="Arial" font-size="9" fill="#c4956a">gather closed</text>
+      </svg>
+      <div style="text-align: center; font-family: Arial, sans-serif; font-size: 0.8rem; color: #1a2744; font-weight: 600; margin-top: 0.5rem;">SIDE VIEW</div>
+    </div>
+
+    <!-- TOP VIEW (looking down at crown) -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer circle: body at full radius (stockinette) -->
+        <circle cx="200" cy="200" r="140" fill="#dde6f0" stroke="#1a2744" stroke-width="2"/>
+
+        <!-- Decrease rings (concentric circles showing crown shaping) -->
+        <!-- 80 sts: R=2.829" -> 90.7% of body -->
+        <circle cx="200" cy="200" r="127" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 70 sts: R=2.476" -> 79.6% -->
+        <circle cx="200" cy="200" r="111" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 60 sts: R=2.122" -> 68.2% -->
+        <circle cx="200" cy="200" r="96" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 50 sts: R=1.768" -> 56.8% -->
+        <circle cx="200" cy="200" r="80" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 40 sts: R=1.415" -> 45.5% -->
+        <circle cx="200" cy="200" r="64" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 30 sts: R=1.061" -> 34.1% -->
+        <circle cx="200" cy="200" r="48" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 20 sts: R=0.707" -> 22.7% -->
+        <circle cx="200" cy="200" r="32" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+        <!-- 10 sts: R=0.354" -> 11.4% -->
+        <circle cx="200" cy="200" r="16" fill="none" stroke="#c4d4e8" stroke-width="0.8"/>
+
+        <!-- Gather point -->
+        <circle cx="200" cy="200" r="5" fill="#c4956a"/>
+
+        <!-- Stitch column radial lines (every 8th stitch = 11 lines, showing decrease alignment) -->
+        <g stroke="#c4d4e8" stroke-width="0.5">
+          <line x1="200" y1="60" x2="200" y2="195"/>
+          <line x1="284" y1="78" x2="204" y2="196"/>
+          <line x1="332" y1="138" x2="205" y2="199"/>
+          <line x1="340" y1="200" x2="205" y2="200"/>
+          <line x1="332" y1="262" x2="205" y2="201"/>
+          <line x1="284" y1="322" x2="204" y2="204"/>
+          <line x1="200" y1="340" x2="200" y2="205"/>
+          <line x1="116" y1="322" x2="196" y2="204"/>
+          <line x1="68" y1="262" x2="195" y2="201"/>
+          <line x1="60" y1="200" x2="195" y2="200"/>
+          <line x1="68" y1="138" x2="195" y2="199"/>
+          <line x1="116" y1="78" x2="196" y2="196"/>
+        </g>
+
+        <!-- Diameter dimension line (horizontal) -->
+        <line x1="60" y1="370" x2="340" y2="370" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="60" y1="360" x2="60" y2="380" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="340" y1="360" x2="340" y2="380" stroke="#2e5e8c" stroke-width="1.5"/>
+        <!-- Extension lines from circle to dimension -->
+        <line x1="60" y1="200" x2="60" y2="362" stroke="#2e5e8c" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="340" y1="200" x2="340" y2="362" stroke="#2e5e8c" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <text x="200" y="390" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700" id="svgTopDiam">
+          ∅ 6.22″ / 15.8 cm
+        </text>
+
+        <!-- Crown label -->
+        <text x="200" y="170" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">CROWN</text>
+        <text x="200" y="184" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b" id="svgTopDecRnds">7 decrease rounds</text>
+        <text x="200" y="220" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b" id="svgTopCrownSts">88 → 10 sts</text>
+
+        <!-- Outer ring label -->
+        <text x="200" y="54" text-anchor="middle" font-family="Arial" font-size="10" fill="#1a2744" font-weight="600" id="svgTopSts">88 stitches</text>
+
+        <!-- Gather label -->
+        <text x="200" y="240" text-anchor="middle" font-family="Arial" font-size="9" fill="#c4956a">gather closed</text>
+      </svg>
+      <div style="text-align: center; font-family: Arial, sans-serif; font-size: 0.8rem; color: #1a2744; font-weight: 600; margin-top: 0.5rem;">TOP VIEW (Crown)</div>
+    </div>
+
+    <!-- BOTTOM VIEW (looking up into hat opening) -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer circle: brim at rib contraction (88% of body radius) -->
+        <circle cx="200" cy="200" r="140" fill="#dde6f0" stroke="#1a2744" stroke-width="2"/>
+
+        <!-- Inner circle: rib opening (contracted) -->
+        <circle cx="200" cy="200" r="123" fill="#c4d4e8" stroke="#1a2744" stroke-width="1.5"/>
+
+        <!-- Head opening circle (unstretched rib) -->
+        <circle cx="200" cy="200" r="105" fill="#faf8f5" stroke="#1a2744" stroke-width="1" stroke-dasharray="4,3"/>
+
+        <!-- Rib texture lines (radial, showing 1x1 rib structure) -->
+        <g stroke="#b0bdd0" stroke-width="0.6">
+          <!-- 22 radial lines for rib columns (every 4th stitch) -->
+          <line x1="200" y1="77" x2="200" y2="60"/>
+          <line x1="240" y1="79" x2="245" y2="62"/>
+          <line x1="277" y1="89" x2="286" y2="74"/>
+          <line x1="306" y1="107" x2="320" y2="95"/>
+          <line x1="326" y1="132" x2="338" y2="123"/>
+          <line x1="336" y1="163" x2="340" y2="148"/>
+          <line x1="340" y1="200" x2="340" y2="200"/>
+          <line x1="336" y1="237" x2="340" y2="252"/>
+          <line x1="326" y1="268" x2="338" y2="277"/>
+          <line x1="306" y1="293" x2="320" y2="305"/>
+          <line x1="277" y1="311" x2="286" y2="326"/>
+          <line x1="240" y1="321" x2="245" y2="338"/>
+          <line x1="200" y1="323" x2="200" y2="340"/>
+          <line x1="160" y1="321" x2="155" y2="338"/>
+          <line x1="123" y1="311" x2="114" y2="326"/>
+          <line x1="94" y1="293" x2="80" y2="305"/>
+          <line x1="74" y1="268" x2="62" y2="277"/>
+          <line x1="64" y1="237" x2="60" y2="252"/>
+          <line x1="60" y1="200" x2="60" y2="200"/>
+          <line x1="64" y1="163" x2="60" y2="148"/>
+          <line x1="74" y1="132" x2="62" y2="123"/>
+          <line x1="94" y1="107" x2="80" y2="95"/>
+        </g>
+
+        <!-- Rib band label -->
+        <text x="200" y="160" text-anchor="middle" font-family="Arial" font-size="11" fill="#1a2744" font-weight="600">1x1 RIB</text>
+        <text x="200" y="175" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b" id="svgBotSts">88 stitches</text>
+        <text x="200" y="190" text-anchor="middle" font-family="Arial" font-size="10" fill="#6b6b6b" id="svgBotRib">9 rounds (1.5″ / 3.8 cm)</text>
+
+        <!-- Head opening label -->
+        <text x="200" y="220" text-anchor="middle" font-family="Arial" font-size="10" fill="#c4956a" font-weight="600">Head opening</text>
+        <text x="200" y="234" text-anchor="middle" font-family="Arial" font-size="9" fill="#c4956a" id="svgBotHead">~17.2″ / 43.7 cm stretched</text>
+
+        <!-- Brim circumference dimension -->
+        <line x1="60" y1="370" x2="340" y2="370" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="60" y1="360" x2="60" y2="380" stroke="#2e5e8c" stroke-width="1.5"/>
+        <line x1="340" y1="360" x2="340" y2="380" stroke="#2e5e8c" stroke-width="1.5"/>
+        <!-- Extension lines -->
+        <line x1="60" y1="200" x2="60" y2="362" stroke="#2e5e8c" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="340" y1="200" x2="340" y2="362" stroke="#2e5e8c" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <text x="200" y="390" text-anchor="middle" font-family="Arial" font-size="12" fill="#2e5e8c" font-weight="700" id="svgBotCirc">
+          Circ: 19.6″ / 49.8 cm
+        </text>
+
+        <!-- Rib contraction annotation -->
+        <line x1="285" y1="103" x2="320" y2="75" stroke="#c4956a" stroke-width="1"/>
+        <circle cx="285" cy="103" r="2.5" fill="#c4956a"/>
+        <text x="322" y="72" font-family="Arial" font-size="9" fill="#c4956a">Rib contraction</text>
+        <text x="322" y="83" font-family="Arial" font-size="9" fill="#c4956a">(~12% inward)</text>
+      </svg>
+      <div style="text-align: center; font-family: Arial, sans-serif; font-size: 0.8rem; color: #1a2744; font-weight: 600; margin-top: 0.5rem;">BOTTOM VIEW (Brim Opening)</div>
+    </div>
+
   </div>
 
   <!-- ═══ 3D TECHNICAL DRAWING SHEET ═══ -->
@@ -2006,6 +2164,56 @@ function fmtCm(inches) { return toCm(inches).toFixed(1) + ' cm'; }
 function fmtDual(inches) { return fmt(inches) + ' / ' + fmtCm(inches); }
 
 function roundTo(n, mult) { return Math.round(n / mult) * mult; }
+
+// ═══ DIMENSION DIAGRAM SIZE SELECTOR ═══
+function updateDimDiagrams(sizeIndex) {
+  const s = SIZES[sizeIndex];
+  const headIn = s.head;
+  const castOn = roundTo(headIn * EASE_FACTOR * STS_PER_IN, 4);
+  const finCircIn = castOn / STS_PER_IN;
+  const flatWidthIn = finCircIn / 2;
+  const ribRnds = s.ribRnds;
+  const brimHeight = ribRnds / RNDS_PER_IN;
+  const crownBase = Math.floor(castOn / WEDGES) * WEDGES;
+  const setupNeeded = castOn > crownBase;
+  const crownRnds = (crownBase / WEDGES) - 1;
+  const crownDepth = (crownRnds * 2 + (setupNeeded ? 2 : 0)) / RNDS_PER_IN;
+  const totalHeight = brimHeight + (headIn * EASE_FACTOR * 0.45) + crownDepth;
+  const diamIn = finCircIn / Math.PI;
+  const headOpenIn = headIn * 0.88; // rib contraction ~12%
+
+  const sizeNum = sizeIndex + 1;
+  const d = (v) => v.toFixed(1);
+  const d2 = (v) => v.toFixed(2).replace(/\.?0+$/, '');
+
+  // Heading
+  document.getElementById('dimHeading').innerHTML = 'Finished Dimensions \u2014 ' + s.name + ' Size ' + sizeNum;
+
+  // Side view
+  document.getElementById('svgSideRib').textContent = '1x1 RIB (' + d2(brimHeight) + '\u2033 / ' + d(brimHeight * 2.54) + ' cm)';
+  document.getElementById('svgSideWidth').textContent = 'Width: ' + d2(flatWidthIn) + '\u2033 / ' + d(flatWidthIn * 2.54) + ' cm (flat)';
+  document.getElementById('svgSideCirc').textContent = 'Circumference: ' + d(finCircIn) + '\u2033 / ' + d(finCircIn * 2.54) + ' cm';
+  document.getElementById('svgSideHeight').textContent = 'Height: ' + d2(totalHeight) + '\u2033 / ' + d(totalHeight * 2.54) + ' cm';
+  document.getElementById('svgSideCrownDepth').textContent = '(~' + d(crownDepth) + '\u2033 from top)';
+  document.getElementById('svgSideBodySts').textContent = castOn + ' stitches \u00d7 6 rnds/in';
+  document.getElementById('svgSideCrownSts').textContent = castOn + ' \u2192 ' + WEDGES + ' sts (' + crownRnds + ' dec rnds)';
+
+  // Top view
+  document.getElementById('svgTopDiam').textContent = '\u2300 ' + d2(diamIn) + '\u2033 / ' + d(diamIn * 2.54) + ' cm';
+  document.getElementById('svgTopDecRnds').textContent = crownRnds + ' decrease rounds';
+  document.getElementById('svgTopCrownSts').textContent = castOn + ' \u2192 ' + WEDGES + ' sts';
+  document.getElementById('svgTopSts').textContent = castOn + ' stitches';
+
+  // Bottom view
+  document.getElementById('svgBotSts').textContent = castOn + ' stitches';
+  document.getElementById('svgBotRib').textContent = ribRnds + ' rounds (' + d2(brimHeight) + '\u2033 / ' + d(brimHeight * 2.54) + ' cm)';
+  document.getElementById('svgBotHead').textContent = '~' + d(headOpenIn) + '\u2033 / ' + d(headOpenIn * 2.54) + ' cm stretched';
+  document.getElementById('svgBotCirc').textContent = 'Circ: ' + d(finCircIn) + '\u2033 / ' + d(finCircIn * 2.54) + ' cm';
+}
+
+document.getElementById('dimSizeSelect').addEventListener('change', function() {
+  updateDimDiagrams(parseInt(this.value));
+});
 
 function calculate() {
   const rawVal = parseFloat(document.getElementById('calcInput').value);
