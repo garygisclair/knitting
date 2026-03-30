@@ -6,64 +6,78 @@
 <title>Classic Stockinette Beanie Pattern - Full Specification Reference</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+
   :root {
-    --navy: #1a2744;
-    --blue: #2e5e8c;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-muted: #6b6b6b;
+    --bg: #fafaf8;
+    --surface: #ffffff;
+    --border: #e2e0db;
+    --accent: #2c5282;
+    --accent-light: #ebf2fa;
+    --warm: #b8860b;
+    --warm-light: #fdf6e3;
+    /* Legacy aliases — keeps JS and SVG refs working */
+    --navy: #1a1a1a;
+    --blue: #2c5282;
     --light-blue: #4a8cc7;
-    --cream: #faf8f5;
-    --warm-gray: #f0ece6;
-    --text: #2c2c2c;
+    --cream: #fafaf8;
+    --warm-gray: #f5f4f1;
+    --text: #1a1a1a;
     --muted: #6b6b6b;
-    --border: #d4cfc7;
-    --accent: #c4956a;
-    --yarn-blue: #2a3d6b;
+    --yarn-blue: #2c5282;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
 
   body {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    background: var(--cream);
-    color: var(--text);
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
     line-height: 1.7;
   }
 
   .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 4rem;
   }
 
   /* Header */
   header {
     text-align: center;
     padding: 3rem 0 2rem;
-    border-bottom: 3px solid var(--navy);
+    border-bottom: 3px solid var(--ink);
     margin-bottom: 2.5rem;
   }
 
   header h1 {
-    font-size: 2.2rem;
-    color: var(--navy);
-    font-weight: 700;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    color: var(--ink);
+    font-weight: 800;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 
   header .subtitle {
-    font-size: 1.1rem;
-    color: var(--muted);
-    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
   }
 
   header .source {
     margin-top: 1rem;
     font-size: 0.85rem;
-    color: var(--muted);
+    color: var(--ink-muted);
   }
 
   header .source a {
-    color: var(--blue);
+    color: var(--accent);
     text-decoration: none;
   }
 
@@ -71,7 +85,7 @@
   .badge-row {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-top: 1.5rem;
     flex-wrap: wrap;
   }
@@ -80,40 +94,55 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.35rem 0.9rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink-soft);
   }
 
-  .badge-level { background: #e8f0e0; color: #3a6b1e; }
-  .badge-yarn { background: #e5ecf5; color: var(--blue); }
-  .badge-needle { background: #f5ece0; color: #8c5a2a; }
-  .badge-sizes { background: #f0e5f0; color: #6b2a6b; }
+  .badge-level { border-color: #9ae6b4; color: #276749; background: #f0fff4; }
+  .badge-yarn { border-color: #bee3f8; color: #2c5282; background: #ebf8ff; }
+  .badge-needle { border-color: #fbd38d; color: #975a16; background: #fffff0; }
+  .badge-sizes { border-color: #d6bcfa; color: #553c9a; background: #faf5ff; }
 
   /* Sections */
   h2 {
-    font-size: 1.4rem;
-    color: var(--navy);
-    margin: 2.5rem 0 1rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 2px solid var(--border);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin: 3rem 0 0.25rem;
+    padding: 0;
+    border: none;
+  }
+
+  h2::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ink) 0%, transparent 100%);
+    margin-top: 0.35rem;
+    margin-bottom: 1.25rem;
   }
 
   h3 {
-    font-size: 1.1rem;
-    color: var(--blue);
-    margin: 1.8rem 0 0.8rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 1.8rem 0 0.75rem;
   }
 
-  p { margin-bottom: 1rem; }
+  p { margin-bottom: 0.75rem; font-size: 0.95rem; }
 
   /* Gauge box */
   .gauge-box {
-    background: white;
-    border: 2px solid var(--navy);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 1.5rem 2rem;
     margin: 1.5rem 0;
@@ -124,22 +153,20 @@
 
   .gauge-box .gauge-title {
     grid-column: 1 / -1;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border);
   }
 
-  .gauge-item {
-    font-family: 'Segoe UI', Arial, sans-serif;
-  }
+  .gauge-item {}
 
   .gauge-item .label {
-    font-size: 0.75rem;
-    color: var(--muted);
+    font-size: 0.7rem;
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
@@ -147,12 +174,12 @@
   .gauge-item .value {
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--ink);
   }
 
   .gauge-item .unit {
     font-size: 0.85rem;
-    color: var(--muted);
+    color: var(--ink-muted);
     font-weight: 400;
   }
 
@@ -161,19 +188,19 @@
     width: 100%;
     border-collapse: collapse;
     margin: 1rem 0 1.5rem;
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.88rem;
   }
 
   thead th {
-    background: var(--navy);
-    color: white;
+    background: var(--surface);
+    color: var(--ink);
     padding: 0.6rem 0.8rem;
     text-align: left;
-    font-weight: 600;
-    font-size: 0.8rem;
+    font-weight: 700;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--ink);
   }
 
   tbody td {
@@ -186,17 +213,17 @@
   }
 
   tbody tr:hover {
-    background: #e8e2d8;
+    background: #edecea;
   }
 
   /* Highlight adult size row */
   tbody tr.highlight {
-    background: #dde6f0;
+    background: var(--accent-light);
     font-weight: 600;
   }
 
   tbody tr.highlight:hover {
-    background: #d0dce8;
+    background: #dce8f5;
   }
 
   .td-number {
@@ -206,8 +233,8 @@
 
   /* Formula boxes */
   .formula-box {
-    background: white;
-    border-left: 4px solid var(--light-blue);
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
     padding: 1rem 1.5rem;
     margin: 1rem 0;
     font-family: 'Consolas', 'Courier New', monospace;
@@ -217,18 +244,18 @@
   }
 
   .formula-box .formula-label {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     font-weight: 600;
-    color: var(--blue);
-    font-size: 0.8rem;
+    color: var(--accent);
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     margin-bottom: 0.4rem;
   }
 
   /* Instruction blocks */
   .instruction {
-    background: white;
+    background: var(--surface);
     border-radius: 8px;
     padding: 1.2rem 1.5rem;
     margin: 1rem 0;
@@ -239,12 +266,11 @@
     display: inline-block;
     width: 28px;
     height: 28px;
-    background: var(--navy);
+    background: var(--accent);
     color: white;
     border-radius: 50%;
     text-align: center;
     line-height: 28px;
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.8rem;
     font-weight: 700;
     margin-right: 0.5rem;
@@ -252,12 +278,12 @@
   }
 
   .instruction strong {
-    color: var(--navy);
+    color: var(--ink);
   }
 
   /* Crown decrease visualization */
   .crown-viz {
-    background: white;
+    background: var(--surface);
     border-radius: 8px;
     padding: 1.5rem;
     margin: 1.5rem 0;
@@ -269,8 +295,7 @@
     align-items: center;
     gap: 0.8rem;
     padding: 0.4rem 0;
-    border-bottom: 1px solid #f0ece6;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    border-bottom: 1px solid var(--border);
     font-size: 0.85rem;
   }
 
@@ -279,40 +304,40 @@
   .crown-round .rnd-label {
     min-width: 65px;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--ink);
     font-size: 0.78rem;
   }
 
   .crown-round .rnd-inst {
     flex: 1;
-    color: var(--text);
+    color: var(--ink-soft);
   }
 
   .crown-round .rnd-sts {
     min-width: 60px;
     text-align: right;
     font-weight: 700;
-    color: var(--blue);
+    color: var(--accent);
     font-variant-numeric: tabular-nums;
   }
 
   .crown-round .rnd-bar {
     width: 120px;
-    height: 8px;
+    height: 6px;
     background: var(--warm-gray);
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
   }
 
   .crown-round .rnd-bar-fill {
     height: 100%;
-    background: var(--light-blue);
-    border-radius: 4px;
+    background: var(--accent);
+    border-radius: 3px;
     transition: width 0.3s;
   }
 
   .crown-round.even-round {
-    color: var(--muted);
+    color: var(--ink-muted);
     font-style: italic;
   }
 
@@ -331,17 +356,53 @@
     .diagram-container svg { max-width: 320px; }
   }
 
+  /* Dimension heading with inline selector */
+  .dim-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 3rem 0 0;
+  }
+
+  .dim-heading {
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1;
+  }
+
+  .dim-heading::after {
+    margin-bottom: 0;
+  }
+
+  .dim-select {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 0.85rem;
+    padding: 0.35rem 1.8rem 0.35rem 0.6rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    background-color: var(--surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' fill='none' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: var(--ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
   /* Notes */
   .note {
-    background: #fdf6ee;
-    border-left: 4px solid var(--accent);
+    background: var(--warm-light);
+    border-left: 3px solid var(--warm);
     padding: 0.8rem 1.2rem;
     margin: 1rem 0;
     font-size: 0.9rem;
     border-radius: 0 6px 6px 0;
   }
 
-  .note strong { color: #8c5a2a; }
+  .note strong { color: var(--ink); }
 
   /* Materials list */
   .materials-grid {
@@ -352,30 +413,29 @@
   }
 
   .material-card {
-    background: white;
+    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 1rem 1.2rem;
   }
 
   .material-card .mat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
+    font-size: 0.7rem;
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    font-family: 'Segoe UI', Arial, sans-serif;
     margin-bottom: 0.3rem;
   }
 
   .material-card .mat-value {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--ink);
   }
 
   .material-card .mat-detail {
     font-size: 0.85rem;
-    color: var(--muted);
+    color: var(--ink-muted);
     margin-top: 0.2rem;
   }
 
@@ -438,7 +498,6 @@
   }
 
   .arch-view-label {
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.7rem;
     font-weight: 700;
     color: #2c1810;
@@ -451,10 +510,9 @@
 
   /* Dimension annotations on arch views */
   .arch-dim {
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.68rem;
     font-weight: 600;
-    color: #2e5e8c;
+    color: var(--accent);
     white-space: nowrap;
   }
 
@@ -480,7 +538,6 @@
 
   /* Callout boxes on arch sheet */
   .arch-callout {
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.72rem;
     color: #5a4a3a;
     line-height: 1.6;
@@ -518,7 +575,6 @@
     background: rgba(255,252,247,0.92);
     border: 1.5px solid #8b7355;
     padding: 8px 14px;
-    font-family: 'Segoe UI', Arial, sans-serif;
   }
 
   .arch-title-block h3 {
@@ -549,7 +605,6 @@
 
   /* Scale bar */
   .arch-scale {
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.58rem;
     color: #6b5a48;
   }
@@ -577,12 +632,11 @@
 
   /* ═══ MEASUREMENT CALCULATOR ═══ */
   .calc-section {
-    background: white;
-    border: 2px solid var(--navy);
-    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
     padding: 2rem;
     margin: 2rem 0;
-    box-shadow: 0 2px 12px rgba(26, 39, 68, 0.08);
   }
 
   .calc-section h2 {
@@ -590,6 +644,10 @@
     padding: 0;
     border: none;
     text-align: center;
+  }
+
+  .calc-section h2::after {
+    display: none;
   }
 
   .calc-subtitle {
@@ -616,10 +674,9 @@
   }
 
   .calc-field label {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -627,23 +684,23 @@
   .calc-field input[type="number"] {
     width: 120px;
     padding: 0.5rem 0.7rem;
-    border: 2px solid var(--border);
+    border: 1.5px solid var(--border);
     border-radius: 6px;
     font-size: 1.1rem;
-    font-family: 'Georgia', serif;
-    color: var(--navy);
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
     text-align: center;
     transition: border-color 0.2s;
   }
 
   .calc-field input[type="number"]:focus {
     outline: none;
-    border-color: var(--light-blue);
+    border-color: var(--accent);
   }
 
   .calc-toggle {
     display: inline-flex;
-    border: 2px solid var(--navy);
+    border: 1.5px solid var(--ink);
     border-radius: 6px;
     overflow: hidden;
   }
@@ -651,17 +708,16 @@
   .calc-toggle button {
     padding: 0.5rem 1rem;
     border: none;
-    background: white;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--surface);
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--navy);
+    color: var(--ink);
     cursor: pointer;
     transition: all 0.2s;
   }
 
   .calc-toggle button.active {
-    background: var(--navy);
+    background: var(--ink);
     color: white;
   }
 
@@ -671,11 +727,10 @@
 
   .calc-btn {
     padding: 0.55rem 1.8rem;
-    background: var(--navy);
+    background: var(--ink);
     color: white;
     border: none;
     border-radius: 6px;
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -684,7 +739,7 @@
   }
 
   .calc-btn:hover {
-    background: var(--blue);
+    background: var(--ink-soft);
   }
 
   /* Results */
@@ -705,14 +760,15 @@
   }
 
   .calc-size-match .size-name {
+    font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--ink);
   }
 
   .calc-size-match .size-detail {
     font-size: 0.88rem;
-    color: var(--muted);
+    color: var(--ink-muted);
     margin-top: 0.2rem;
   }
 
@@ -728,13 +784,13 @@
     border-radius: 8px;
     padding: 0.8rem 1rem;
     text-align: center;
+    border: 1px solid var(--border);
   }
 
   .calc-card .cc-label {
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.7rem;
     font-weight: 600;
-    color: var(--muted);
+    color: var(--ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.2rem;
@@ -743,14 +799,13 @@
   .calc-card .cc-value {
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--ink);
     font-variant-numeric: tabular-nums;
   }
 
   .calc-card .cc-sub {
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.78rem;
-    color: var(--muted);
+    color: var(--ink-muted);
     margin-top: 0.1rem;
   }
 
@@ -765,12 +820,11 @@
 
   .calc-zone-bar {
     display: flex;
-    height: 36px;
+    height: 32px;
     border-radius: 6px;
     overflow: hidden;
     margin-bottom: 0.5rem;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: white;
   }
@@ -782,17 +836,16 @@
     transition: width 0.4s ease;
   }
 
-  .cz-brim { background: var(--accent); }
-  .cz-body { background: var(--blue); }
-  .cz-crown { background: var(--navy); }
+  .cz-brim { background: #b8860b; }
+  .cz-body { background: var(--accent); }
+  .cz-crown { background: var(--ink); }
 
   .calc-zone-legend {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 0.8rem;
-    color: var(--text);
+    color: var(--ink-soft);
     margin-bottom: 1rem;
   }
 
@@ -806,9 +859,9 @@
     vertical-align: middle;
   }
 
-  .calc-zone-legend .zl-brim::before { background: var(--accent); }
-  .calc-zone-legend .zl-body::before { background: var(--blue); }
-  .calc-zone-legend .zl-crown::before { background: var(--navy); }
+  .calc-zone-legend .zl-brim::before { background: #b8860b; }
+  .calc-zone-legend .zl-body::before { background: var(--accent); }
+  .calc-zone-legend .zl-crown::before { background: var(--ink); }
 
   /* Purchase / PDF button */
   .calc-pdf-btn {
@@ -1177,10 +1230,10 @@
   footer {
     margin-top: 3rem;
     padding-top: 1.5rem;
-    border-top: 2px solid var(--border);
+    border-top: 1px solid var(--border);
     text-align: center;
     font-size: 0.8rem;
-    color: var(--muted);
+    color: var(--ink-muted);
   }
 </style>
 </head>
@@ -1535,9 +1588,9 @@
   </div>
 
   <!-- ═══ DIMENSIONS DIAGRAMS ═══ -->
-  <div style="display: flex; align-items: baseline; justify-content: space-between; margin: 2.5rem 0 0; padding-bottom: 0.4rem; border-bottom: 2px solid #d4cfc7;">
-    <h2 style="margin: 0; padding: 0; border: none;" id="dimHeading">Finished Dimensions &mdash; Adult Size 7</h2>
-    <select id="dimSizeSelect" style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 0.85rem; padding: 0.35rem 1.8rem 0.35rem 0.6rem; border: 1.5px solid #1a2744; border-radius: 6px; background-color: white; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' fill='none' stroke='%231a2744' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 0.5rem center; -webkit-appearance: none; -moz-appearance: none; appearance: none; color: #1a2744; font-weight: 600; cursor: pointer;">
+  <div class="dim-header">
+    <h2 class="dim-heading" id="dimHeading">Finished Dimensions &mdash; Adult Size 7</h2>
+    <select id="dimSizeSelect" class="dim-select">
       <option value="0">1 &mdash; Newborn</option>
       <option value="1">2 &mdash; 3&ndash;6 mo</option>
       <option value="2">3 &mdash; 6&ndash;12 mo</option>
@@ -2117,7 +2170,6 @@
   </table>
 
   <footer>
-    <p>Pattern reference compiled from <a href="https://www.craftfix.com/circular-knit-hat-pattern/" style="color:var(--blue)">Craft Fix</a>. All measurements derived from gauge: 18 sts &times; 24 rnds = 4&Prime; in stockinette on 5mm needles.</p>
     <p>3D model specifications calculated using: Radius = Stitches &divide; (Gauge &times; 2&pi;) &nbsp;|&nbsp; Height = Rounds &divide; Row Gauge</p>
   </footer>
 
